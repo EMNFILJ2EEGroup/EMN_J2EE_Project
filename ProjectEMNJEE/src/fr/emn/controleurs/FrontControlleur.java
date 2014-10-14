@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class FrontControlleur
  */
@@ -25,7 +26,7 @@ public class FrontControlleur extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+ 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
