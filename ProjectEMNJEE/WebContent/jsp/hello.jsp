@@ -3,6 +3,6 @@
 <html>
 <%@ include file="template.jsp" %>
 <body>
-	COUCOU
+	COUCOU clem
 </body>
 </html>
