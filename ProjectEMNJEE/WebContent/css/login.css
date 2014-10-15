@@ -18,12 +18,15 @@
 	text-align: center;
 }
 
-.loginBtns {
-	height: 34px;
-	padding-left: 60%;
+#msgbox {
+	margin-bottom : 10px;
+	padding : 5px;
 }
 
-#msgbox {
-	margin-bottom : 5px;
-	padding : 5px;
+.frm_btns {
+	width : 100%;
+}
+
+.formRow {
+	margin-bottom: 6px;
 }
