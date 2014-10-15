@@ -74,7 +74,7 @@ public class FrontControlleur extends HttpServlet {
 			//rd = request.getRequestDispatcher("/jsp/EmployeView.jsp");
 			//rd.forward(request, response);
 		//} else {
-			rd = request.getRequestDispatcher("/jsp/logPage.jsp");
+			rd = request.getRequestDispatcher("/jsp/login.jsp");
 			rd.forward(request, response);
 		//}
 		
