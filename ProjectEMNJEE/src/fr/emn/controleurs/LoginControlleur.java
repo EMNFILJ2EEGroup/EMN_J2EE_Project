@@ -16,14 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/login")
 public class LoginControlleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginControlleur() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginControlleur() {
+		super();
+	}
 
 	/**
 	 * @see Servlet#init(ServletConfig)
@@ -40,6 +39,7 @@ public class LoginControlleur extends HttpServlet {
 		RequestDispatcher rd;
 		rd = request.getRequestDispatcher("/jsp/login.jsp");
 		rd.forward(request, response);
+		request.getSession().removeAttribute("toast");
 	}
 
 	/**
@@ -49,15 +49,47 @@ public class LoginControlleur extends HttpServlet {
 		System.out.println("LoginController [POST] - begin");
 		String un = request.getParameter("username");
 		String pwd = request.getParameter("passwd");
-		
-		if(un.equals("test") && pwd.equals("test")) {
-			System.out.println("LoginController [POST] - correct");
-			request.getSession().setAttribute("token", "plop");
-			response.sendRedirect("/ProjectEMNJEE/main");
-		} else {
-			System.out.println("LoginController [POST] - not correct");
-			response.sendRedirect("/ProjectEMNJEE/login");
+		String btn = request.getParameter("button");
+
+		if(btn.equals("Subscribe")) 
+		{
+			System.out.println("LoginController [POST] - subscribe");
+			request.getSession().removeAttribute("toast");
+			if(checkUserAlreadyExist(un)){
+				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
+				response.sendRedirect("/ProjectEMNJEE/login");
+			}
+			else {
+				// TODO : Create user in BD
+				request.getSession().setAttribute("token", generateToken(un, pwd));
+				response.sendRedirect("/ProjectEMNJEE/main");
+			}
+		} 
+		else 
+		{
+			if(checkLogin(un,pwd)) {
+				System.out.println("LoginController [POST] - correct");
+				request.getSession().removeAttribute("toast");
+				request.getSession().setAttribute("token", generateToken(un, pwd));
+				response.sendRedirect("/ProjectEMNJEE/main");
+			} else {
+				System.out.println("LoginController [POST] - not correct");
+				request.getSession().setAttribute("toast", "Nom d'utilisateur ou mot de passe invalides");
+				response.sendRedirect("/ProjectEMNJEE/login");
+			}
 		}
 	}
-	
+
+	private String generateToken(String user, String mdp) {
+		return "plop";
+	}
+
+	private boolean checkUserAlreadyExist(String user) {
+		return true;
+	}
+
+	private boolean checkLogin(String user, String mdp) {
+		return (user.equals("admin") && mdp.equals("test")) ? true : false;
+	}
+
 }

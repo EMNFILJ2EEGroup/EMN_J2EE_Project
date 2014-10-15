@@ -4,6 +4,7 @@
 <head>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/login.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Formulaire de login</title>
 
@@ -24,10 +25,11 @@
 				</div>
 				<div style="clear: both; height: 0px;"></div>
 
-				<div id="msgbox"></div>
+				<div id="msgbox"> ${sessionScope.toast} </div>
 			</div>
 			<div id="login_footer">
-				<label> <input type="submit" id="login" 	value="Login" /></label>
+				<label> <input type="submit" id="login" 	name="button"   value="Login" /></label>
+				<label> <input type="submit" id="subscribe" name="button"	value="Subscribe" /></label>
 			</div>
 		</div>
 	</form>

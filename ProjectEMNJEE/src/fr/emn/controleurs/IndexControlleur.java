@@ -22,7 +22,6 @@ public class IndexControlleur extends HttpServlet {
 	 */
 	public IndexControlleur() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
