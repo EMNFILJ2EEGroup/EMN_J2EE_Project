@@ -3,6 +3,6 @@
 <html>
 <%@ include file="../WEB-INF/jspf/head.jspf" %>
 <body>
-	COUCOU
+	index.jsp
 </body>
-</html>
+</html>	
