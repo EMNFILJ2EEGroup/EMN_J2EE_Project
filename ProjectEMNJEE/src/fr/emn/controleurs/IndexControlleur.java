@@ -35,19 +35,19 @@ public class IndexControlleur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String token = (String) request.getSession().getAttribute("token");
-		if(token == null) response.sendRedirect("/ProjectEMNJEE/login");
-		else {
-			if(!token.equals("plop")) {
-				System.out.println("IndexController [GET] - not connected");
-				response.sendRedirect("/ProjectEMNJEE/login");
-			} else {
+		//String token = (String) request.getSession().getAttribute("token");
+		//if(token == null) response.sendRedirect("/ProjectEMNJEE/login");
+		//else {
+		//	if(!token.equals("plop")) {
+		//		System.out.println("IndexController [GET] - not connected");
+		//		response.sendRedirect("/ProjectEMNJEE/login");
+		//	} else {
 				System.out.println("IndexController [GET] - connected, ok");
 				RequestDispatcher rd;
 				rd = request.getRequestDispatcher("/jsp/index.jsp");
 				rd.forward(request, response);
-			}
-		}
+		//	}
+		//}
 	}
 
 	/**
