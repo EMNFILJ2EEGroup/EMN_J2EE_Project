@@ -89,7 +89,7 @@ public class LoginControlleur extends HttpServlet {
 	}
 
 	private boolean checkLogin(String user, String mdp) {
-		return (user.equals("admin") && mdp.equals("test")) ? true : false;
+		return (user.equals("admin@admin") && mdp.equals("test")) ? true : false;
 	}
 
 }
