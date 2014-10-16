@@ -1,0 +1,32 @@
+@CHARSET "ISO-8859-1";
+
+#login_frm {
+	border-radius: 10px;
+	border: 2px solid black;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 15px;
+	padding-top: 5px;
+	margin-top: 250px;
+}
+
+#login_frm h1 {
+	padding-top: 0px;
+	margin-top: 0px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+#msgbox {
+	margin-bottom : 10px;
+	padding : 5px;
+}
+
+.frm_btns {
+	width : 100%;
+}
+
+.formRow {
+	margin-bottom: 6px;
+}
