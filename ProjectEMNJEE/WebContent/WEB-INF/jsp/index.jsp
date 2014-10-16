@@ -1,7 +1,7 @@
-<%@ include file="../WEB-INF/jspf/prolog.jspf"%>
+<%@ include file="../jspf/prolog.jspf"%>
 
 <html>
-<%@ include file="../WEB-INF/jspf/head.jspf"%>
+<%@ include file="../jspf/head.jspf"%>
 <body>
 	<center>
 		<h1> /main     -> index.jsp</h1>

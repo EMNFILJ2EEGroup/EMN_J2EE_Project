@@ -44,7 +44,7 @@ public class IndexControlleur extends HttpServlet {
 		//	} else {
 				System.out.println("IndexController [GET] - connected, ok");
 				RequestDispatcher rd;
-				rd = request.getRequestDispatcher("/jsp/index.jsp");
+				rd = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 				rd.forward(request, response);
 		//	}
 		//}

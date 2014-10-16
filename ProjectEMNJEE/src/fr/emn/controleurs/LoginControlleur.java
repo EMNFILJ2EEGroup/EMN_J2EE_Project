@@ -37,7 +37,7 @@ public class LoginControlleur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController [GET] - getLoginPage");
 		RequestDispatcher rd;
-		rd = request.getRequestDispatcher("/jsp/login.jsp");
+		rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		rd.forward(request, response);
 		request.getSession().removeAttribute("toast");
 	}
@@ -56,7 +56,7 @@ public class LoginControlleur extends HttpServlet {
 			System.out.println("LoginController [POST] - subscribe");
 			request.getSession().removeAttribute("toast");
 			if(checkUserAlreadyExist(un)){
-				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
+				request.getSession().setAttribute("toast", "Nom d'utilisateur dï¿½jï¿½ existant");
 				response.sendRedirect("/ProjectEMNJEE/login");
 			}
 			else {
