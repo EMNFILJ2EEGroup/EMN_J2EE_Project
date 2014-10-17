@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebFilter(urlPatterns={"/*"}, initParams={ 
 		@WebInitParam(name="auth-free-urls", 
-				value= "/login"),
+				value= "/login,/Error404.html"),
 				@WebInitParam(name="auth-free-patterns", 
 				value= ".*(\\.css)$,"+
 						".*(\\.js)$")}) 
