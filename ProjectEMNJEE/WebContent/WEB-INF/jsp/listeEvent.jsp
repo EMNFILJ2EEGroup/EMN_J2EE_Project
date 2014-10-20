@@ -9,7 +9,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Evènement</title>
+<title>Liste des évènements</title>
 
 
 <%@ include file="../jspf/barreHaut.jspf"%>
@@ -17,23 +17,14 @@
 </head>
 <body>
 
-<div class="container">
-	<h3>Nom de l'évènement 1</h3>
-
-
-	<h5>Adresse de l'évènement 1</h5>
-
-	<h5>Date et heure de début de l'évènement 1</h5>
-
-	<h5>Date et heure de fin de l'évènement 1</h5>
-	
-		<div class="row">
-			<div class="col-xs-6 col-xs-offset-3">
-				<input type="submit" id="inscription" name="button"
-					class="frm_btns btn btn-success" value="Inscription" />
-			</div>
+	<div class="container">
+		<div class="list-group">
+			<a href="#" class="list-group-item"> Nom Event 1 </a> 
+			<a href="#" class="list-group-item"> Nom Event 2 </a> 
+			<a href="#" class="list-group-item"> Nom Event 3 </a> 
+			<a href="#" class="list-group-item"> Nom Event 4 </a> 
+			<a href="#" class="list-group-item"> Nom Event 5 </a>
 		</div>
 	</div>
-
 </body>
 </html>
