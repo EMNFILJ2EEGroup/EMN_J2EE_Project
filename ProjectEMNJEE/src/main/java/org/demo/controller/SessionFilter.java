@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class SessionFilter
+ * Servlet Filter implementation class SessionFilter 
  */
 @WebFilter(urlPatterns={"/*"}, initParams={ 
 		@WebInitParam(name="auth-free-urls", 
