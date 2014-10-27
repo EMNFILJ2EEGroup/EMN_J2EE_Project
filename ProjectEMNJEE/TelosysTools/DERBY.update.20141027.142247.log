@@ -1,0 +1,14 @@
+Update date : Mon Oct 27 14:22:47 CET 2014
+ 
+ Table 'EVENTS' found in repository
+ . Foreign key 'SQL141020174648962' removed
+ . Foreign key 'SQL141027135845861' added
+ (*) table 'EVENTS' updated : 2 change(s)
+ 
+ Table 'ORGANIZERS' found in repository
+ (=) table 'ORGANIZERS' unchanged
+ 
+ Table 'PARTICIPATIONS' found in repository
+ . Foreign key 'SQL141020174650491' removed
+ . Foreign key 'SQL141027135847381' added
+ (*) table 'PARTICIPATIONS' updated : 2 change(s)

@@ -38,6 +38,11 @@ public class IndexControlleur extends HttpServlet {
 
 		System.out.println("IndexController [GET] - connected, ok");
 		RequestDispatcher rd;
+		
+		
+		
+		
+		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 		rd.forward(request, response);
 

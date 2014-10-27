@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.org.demo.bean.jpa.OrganizersEntity;
+import main.java.org.demo.persistence.PersistenceServiceProvider;
+import main.java.org.demo.persistence.services.OrganizersPersistence;
+import main.java.org.demo.persistence.services.jpa.OrganizersPersistenceJPA;
+
 /**
  * Servlet implementation class LoginControlleur
  */
@@ -61,6 +66,13 @@ public class LoginControlleur extends HttpServlet {
 			}
 			else {
 				// TODO : Create user in BD
+				
+				OrganizersEntity usr = new OrganizersEntity();
+				usr.setEmail(un);
+				usr.setPassword(pwd);
+				OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
+				provider.save(usr);
+				
 				request.getSession().setAttribute("token", generateToken(un, pwd));
 				response.sendRedirect(request.getContextPath() + "/main");
 			}
@@ -81,14 +93,14 @@ public class LoginControlleur extends HttpServlet {
 	}
 
 	private String generateToken(String user, String mdp) {
-		return "plop";
+		return "plop"; //TODO
 	}
 
 	private boolean checkUserAlreadyExist(String user) {
-		return true;
+		return false; //TODO
 	}
 
-	private boolean checkLogin(String user, String mdp) {
+	private boolean checkLogin(String user, String mdp) { //TODO
 		return (user.equals("admin@a") && mdp.equals("test")) ? true : false;
 	}
 
