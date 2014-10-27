@@ -1,0 +1,248 @@
+var graph = new joint.dia.Graph;
+
+var paper = new joint.dia.Paper({
+    el: $('#paper'),
+    width: 800,
+    height:600,
+    gridSize: 1,
+    model: graph
+});
+paper.scale(.75);
+if(document.getElementById("zoom")) {
+	document.getElementById("zoom").value=0.8;
+}
+
+/*var paperSmall = new joint.dia.Paper({
+    el: $('#paper-small'),
+    width: 250,
+    height: 250,
+    model: graph
+});
+
+paperSmall.scale(.2);
+*/
+
+
+paper.on('cell:pointerup', function(cellView , evt) {
+	if(evt.ctrlKey) {
+		
+		//transforms TABLE_NAME in DToName ex: BOOK_ORDER becomes BookOrder
+		var viewToFind = cellView.model.id.toLowerCase();
+		var elem = viewToFind.split('_');
+		viewToFind = "";
+
+		for(var i= 0; i < elem.length; i++)
+		{
+			viewToFind = viewToFind	+ elem[i].charAt(0).toUpperCase() + elem[i].slice(1);
+		}
+		document.location.href="./"+viewToFind+".html";
+	}   	
+});
+
+#set($coordX=450)
+#set($coordY=350)
+#set($ray=360)
+
+## $loader.loadJavaClass("diagUtils", "com.sogeti.DiagUtils")
+#set( $diagUtils = $loader.newInstance("DiagUtils") )
+/*define positionning of different beans around central bean*/
+
+var uml = joint.shapes.uml;
+#set($countExternalReference=0)
+##Count of ForeignKey referencing the actual entity for angle calculation
+#foreach( $entityReferencing in $model.allEntites )
+	#foreach( $fkExternal in $entityReferencing.databaseForeignKeys )
+		#if("$fkExternal.referencedTableName" == "$entity.databaseTable")
+			#set($countExternalReference = $countExternalReference + 1)
+		#end
+	#end	
+#end	
+
+#set($count=0)
+#set($height=$entity.attributes.size()*11+50)
+   var classes = {  
+##entity central
+${entity.databaseTable}: new uml.BDDTable({
+		id:'${entity.databaseTable}',
+        position: { x:$coordX  , y: $coordY },
+        size: { width: 180, height: ${height} },
+        name: '${entity.databaseTable}',
+        attributes: [
+			#foreach( $field in $entity.attributes)
+				#if($field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end 
+			],
+        methods: [
+			#foreach( $field in $entity.attributes)
+				#if(!$field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end 
+				]
+    }),
+#set($height=100)
+#if ( ($entity.databaseForeignKeys.size() + $countExternalReference) > 0 )
+## angle base calculation
+	#set($angle = 360/($entity.databaseForeignKeys.size() + $countExternalReference))
+
+##for each ForeignKey
+	#foreach ( $fk in $entity.databaseForeignKeys)
+
+		##reinit to central position
+		#set($coordX=450)
+		#set($coordY=350)
+
+		##position of ForeingKeyEntity on a cercle around current entity
+		#set($currentAngle=$angle * $count)
+		#set($coordX=$diagUtils.getCoordonateX($coordX, $ray, $currentAngle))
+		#set($coordY=$diagUtils.getCoordonateY($coordY, $ray, $currentAngle))
+		#set($count=$count+1)
+		#set ( $referencedEntity = $model.getEntityByTableName("${fk.referencedTableName}") )
+		##calculation of height from nb attributes
+		#set($height=$referencedEntity.attributes.size()*11+60)
+		${fk.referencedTableName}: new uml.BDDTable({
+		id:'${fk.referencedTableName}',
+        position: { x:$coordX  , y: $coordY },
+        size: { width: 220, height: ${height} },
+        name: '${fk.referencedTableName}',
+        attributes: [
+			#foreach( $field in $referencedEntity.attributes)
+				#if($field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end 
+			],
+        methods: [
+			#foreach( $field in $referencedEntity.attributes)
+				#if(!$field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end 
+		]
+    }),
+	#end ## ends foreach ( $fk in $entity.databaseForeignKeys)
+#end ##ends if ( $entity.databaseForeignKeysCount > 0 )
+
+##ForeignKey referencing the actual entity
+#foreach( $entityReferencing in $model.allEntites )
+	#foreach( $fkExternal in $entityReferencing.databaseForeignKeys )
+		#if("$fkExternal.referencedTableName" == "$entity.databaseTable")
+			##reinit to central position
+			#set($coordX=450)
+			#set($coordY=350)
+
+			##position of ForeingKeyEntity on a cercle around current entity
+			#set($currentAngle=$angle * $count)
+			#set($coordX=$diagUtils.getCoordonateX($coordX, $ray, $currentAngle))
+			#set($coordY=$diagUtils.getCoordonateY($coordY, $ray, $currentAngle))
+			#set($count=$count+1)
+			#set ( $referencingEntity = $model.getEntityByTableName("${fkExternal.tableName}") )
+			##calculation of height from nb attributes
+			#set($height=$referencingEntity.attributes.size()*11+60)
+		${fkExternal.tableName}: new uml.BDDTable({
+		id:'${fkExternal.tableName}',
+        position: { x:$coordX  , y: $coordY },
+        size: { width: 220, height: ${height} },
+        name: '${fkExternal.tableName}',
+        attributes: [
+			#foreach( $field in $referencingEntity.attributes)
+				#if($field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end 
+			],
+        methods: [
+			#foreach( $field in $referencingEntity.attributes)
+				#if(!$field.isKeyElement())
+			'${field.databaseName}: ${field.databaseTypeWithSize}',
+				#end
+			#end
+		]
+    }),
+		#end
+	#end	
+#end	
+};
+
+_.each(classes, function(c) { graph.addCell(c); });
+
+
+
+
+
+
+#if ( ($entity.databaseForeignKeys.size() + $countExternalReference) > 0 )
+## Links management
+var relations = [
+#foreach( $fk in $entity.databaseForeignKeys )
+	#foreach( $fkcol in $fk.columns )
+new joint.dia.Link({
+	source: { id: classes.${fk.tableName}.id },
+	target: { id: classes.${fk.referencedTableName}.id },
+	vertices: [],
+	smooth: false,
+	attrs: {
+	'.marker-target': { d: 'M 20 0 L 0 5 L 20 10 z' }
+	},
+	labels: [
+	{ position: 60, attrs: { text: { text: '${fk.name}' } }}
+	]
+}),	
+	#end
+#end ##ends foreach( $fk in $entity.databaseForeignKeys )
+
+##Links ForeignKey referencing the actual entity
+#foreach( $entityReferencing in $model.allEntites )
+	#foreach( $fkExternal in $entityReferencing.databaseForeignKeys )
+		#if("$fkExternal.referencedTableName" == "$entity.databaseTable")
+			new joint.dia.Link({
+	source: { id: classes.${fkExternal.tableName}.id },
+	target: { id: classes.${fkExternal.referencedTableName}.id },
+	vertices: [],
+	smooth: false,
+	attrs: {
+	'.marker-target': { d: 'M 20 0 L 0 5 L 20 10 z' }
+	},
+	labels: [
+	{ position: 60, attrs: { text: { text: '${fkExternal.name}' } }}
+	]
+}),	
+		#end
+	#end	
+#end
+];
+
+_.each(relations, function(r) { graph.addCell(r); });
+_.each(relations, function(r) { r.toBack(); });
+#end ##ends if ( $entity.databaseForeignKeysCount > 0 )
+
+ function saveGraph(){
+	if(typeof(Storage)!=="undefined")
+  	{
+		localStorage.json${entity.name}Graph=(JSON.stringify(graph.toJSON()));
+  	}
+	else
+  	{
+  		document.getElementById("error").innerHTML="Sorry, your browser does not support web storage...";
+  	}
+} 
+
+ function loadGraph(){
+	if(typeof(Storage)!=="undefined")
+  	{
+		 graph.fromJSON(JSON.parse(localStorage.json${entity.name}Graph));
+  	}
+	else
+  	{
+  		document.getElementById("error").innerHTML="Sorry, your browser does not support web storage...";
+  	}
+     
+   } 
+
+function updateZoom(){
+	paper.scale(document.getElementById("zoom").value);
+}
+
+

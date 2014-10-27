@@ -1,0 +1,94 @@
+.viewport {
+    -moz-user-select: none;
+}
+.magnet {
+    cursor: crosshair;
+}
+.magnet:hover {
+    fill: red;
+    opacity: 0.7;
+}
+.element {
+    cursor: move;
+}
+.element * {
+    -moz-user-select: none;
+}
+.connection-wrap {
+    cursor: move;
+    fill: none;
+    opacity: 0;
+    stroke: black;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 15;
+}
+.connection-wrap:hover {
+    opacity: 0.4;
+    stroke-opacity: 0.4;
+}
+.connection {
+    fill: none;
+    stroke-linejoin: round;
+}
+.marker-source, .marker-target {
+}
+.marker-vertices {
+    cursor: move;
+    opacity: 0;
+}
+.marker-arrowheads {
+    cursor: -moz-grab;
+    opacity: 0;
+}
+.link-tools {
+    cursor: pointer;
+    opacity: 0;
+}
+.link-tools .tool-options {
+    display: none;
+}
+.link-tools .tool-remove circle {
+    fill: red;
+}
+.link-tools .tool-remove path {
+    fill: white;
+}
+.link:hover .marker-vertices, .link:hover .marker-arrowheads, .link:hover .link-tools {
+    opacity: 1;
+}
+.marker-vertex {
+    fill: #1ABC9C;
+}
+.marker-vertex:hover {
+    fill: #34495E;
+    stroke: none;
+}
+.marker-arrowhead {
+    fill: #1ABC9C;
+}
+.marker-arrowhead:hover {
+    fill: #F39C12;
+    stroke: none;
+}
+.marker-vertex-remove {
+    cursor: pointer;
+    fill: white;
+    opacity: 0.1;
+}
+.marker-vertex-group:hover .marker-vertex-remove {
+    opacity: 1;
+}
+.marker-vertex-remove-area {
+    cursor: pointer;
+    opacity: 0.1;
+}
+.marker-vertex-group:hover .marker-vertex-remove-area {
+    opacity: 1;
+}
+text.highlighted {
+    fill: #FF0000;
+}
+.highlighted {
+    outline: 2px solid #FF0000;
+}
