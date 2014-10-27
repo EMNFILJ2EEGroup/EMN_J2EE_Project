@@ -64,11 +64,11 @@ public class SessionFilter implements Filter {
 			HttpSession session = req.getSession(false);
 			if(session == null) {
 				System.out.println("--filter ->redirect. [from="+url+"]");
-				res.sendRedirect("/ProjectEMNJEE/login");
+				res.sendRedirect(req.getContextPath() + "/login");
 			}
 			else if (session.getAttribute("token") == null) {
 				System.out.println("--filter ->redirect. [from="+url+"]");
-				res.sendRedirect("/ProjectEMNJEE/login");
+				res.sendRedirect(req.getContextPath() + "/login");
 			}
 			else {
 				chain.doFilter(request, response);

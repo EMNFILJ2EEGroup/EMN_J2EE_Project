@@ -1,20 +1,18 @@
 <%@ include file="../jspf/prolog.jspf"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
-<head>
 
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<%@ include file="../jspf/commonHeader.jspf"%>
+<script type="text/javascript" src="${baseURL}/lib/js/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="lib/css/bootstrap.min.css"> 
-<link rel="stylesheet" type="text/css" href="css/login.css">
+	href="${baseURL}/lib/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Formulaire de login</title>
-
+<title>Connexion</title>
 </head>
+
 <body>
-	<form id="login_frm" action="/ProjectEMNJEE/login" method="post"
+	<form id="login_frm" action="${baseURL}/login" method="post"
 		class="jumbotron" role="form">
 
 		<h1>Login</h1>
@@ -27,8 +25,7 @@
 
 		<div class="form-group input-group">
 			<span class="input-group-addon">>></span> <input type="password"
-				class="form-control" name="passwd" id="login_pwd"
-				placeholder="test">
+				class="form-control" name="passwd" id="login_pwd" placeholder="test">
 		</div>
 		<c:if test="${ ! empty sessionScope.toast }">
 			<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toast}</div>
@@ -36,12 +33,14 @@
 		<div class="container">
 			<div class="row formRow">
 				<div class="col-xs-12">
-					<input type="submit" id="login" name="button" class="frm_btns btn btn-primary" value="Login" />
-				</div> 
+					<input type="submit" id="login" name="button"
+						class="frm_btns btn btn-primary" value="Login" />
+				</div>
 			</div>
 			<div class="row">
-			<div class="col-xs-6 col-xs-offset-3">
-					 <input type="submit" id="subscribe" name="button" class="frm_btns btn btn-success" value="Subscribe" />
+				<div class="col-xs-6 col-xs-offset-3">
+					<input type="submit" id="subscribe" name="button"
+						class="frm_btns btn btn-success" value="Subscribe" />
 				</div>
 			</div>
 		</div>

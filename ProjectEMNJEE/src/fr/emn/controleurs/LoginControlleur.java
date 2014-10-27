@@ -50,19 +50,19 @@ public class LoginControlleur extends HttpServlet {
 		String un = request.getParameter("username");
 		String pwd = request.getParameter("passwd");
 		String btn = request.getParameter("button");
-
+		
 		if(btn.equals("Subscribe")) 
 		{
 			System.out.println("LoginController [POST] - subscribe");
 			request.getSession().removeAttribute("toast");
 			if(checkUserAlreadyExist(un)){
-				request.getSession().setAttribute("toast", "Nom d'utilisateur d�j� existant");
-				response.sendRedirect("/ProjectEMNJEE/login");
+				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
+				response.sendRedirect(request.getContextPath() + "/login");
 			}
 			else {
 				// TODO : Create user in BD
 				request.getSession().setAttribute("token", generateToken(un, pwd));
-				response.sendRedirect("/ProjectEMNJEE/main");
+				response.sendRedirect(request.getContextPath() + "/main");
 			}
 		} 
 		else 
@@ -71,11 +71,11 @@ public class LoginControlleur extends HttpServlet {
 				System.out.println("LoginController [POST] - correct");
 				request.getSession().removeAttribute("toast");
 				request.getSession().setAttribute("token", generateToken(un, pwd));
-				response.sendRedirect("/ProjectEMNJEE/main");
+				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
 				System.out.println("LoginController [POST] - not correct");
 				request.getSession().setAttribute("toast", "Nom d'utilisateur ou mot de passe invalides");
-				response.sendRedirect("/ProjectEMNJEE/login");
+				response.sendRedirect(request.getContextPath() + "/login");
 			}
 		}
 	}
