@@ -6,6 +6,7 @@
 <title>Main</title>
 </head>
 
+
 <body>
 	<center>
 		<h1>/main -> index.jsp</h1>
