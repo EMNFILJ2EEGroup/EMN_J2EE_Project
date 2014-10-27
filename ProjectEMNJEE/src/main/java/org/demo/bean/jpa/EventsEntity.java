@@ -42,7 +42,7 @@ public class EventsEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //----------------------------------------------------------------------
-    // ENTITY PRIMARY KEY ( BASED ON A SINGLE FIELD )
+    // ENTITY PRIMARY KEY ( BASED ON A SINGLE FIELD ) 
     //----------------------------------------------------------------------
     @Id
     @Column(name="ID", nullable=false)
