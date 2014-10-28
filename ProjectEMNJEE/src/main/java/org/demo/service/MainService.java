@@ -95,29 +95,37 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public Integer checkLogin(String uname, String pwd) {
-		Pattern patern = Pattern.compile("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$");
+		Pattern patern = Pattern.compile("(^[_a-z0-9-]+(\\.[_a-z0-9-]+)*)@([a-z0-9-]+)(\\.[a-z0-9-]+)+$");
 		Matcher matcher = patern.matcher(uname);
 		if (pwd == null || matcher.matches()== false){
 			return null;
 		}else{
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit1");
 			EntityManager em = emf.createEntityManager();
-			Query q = em.createQuery ("SELECT * FROM APP.Organizers where email = "+uname+" and password = "+pwd);
-			OrganizersEntity res = (OrganizersEntity) q.getSingleResult();
-
-			if (res==null){
-				return null;
-			}else {
-				return res.getId();
-			}
+			Query q = em.createNamedQuery("OrganizersEntity.getUserByLogin");
+			q.setParameter("uname", uname);
+			q.setParameter("pwd", pwd);
+			List<OrganizersEntity> res = q.getResultList();
+			if(res.isEmpty()) return null;
+			else return res.get(0).getId();
 		}
 	}
 
+	public boolean checkUserExist(String uname) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit1");
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("OrganizersEntity.getUserByUsername");
+		q.setParameter("uname", uname);
+		List<OrganizersEntity> res = q.getResultList();
+		if(res.isEmpty()) return false;
+		else return true;
+	}
+	
 	@Override
 	public Integer validateSubscribe(String uname, String pwd) {
-		Pattern patern = Pattern.compile("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$");
+		Pattern patern = Pattern.compile("(^[_a-z0-9-]+(\\.[_a-z0-9-]+)*)@([a-z0-9-]+)(\\.[a-z0-9-]+)+$");
 		Matcher matcher = patern.matcher(uname);
-		if (checkLogin(uname, pwd)== null ||pwd == null || matcher.matches()== false){
+		if (checkUserExist(uname) || pwd == null || matcher.matches()== false){
 			return null;
 		}else {
 			OrganizersEntity organizers = new OrganizersEntity();

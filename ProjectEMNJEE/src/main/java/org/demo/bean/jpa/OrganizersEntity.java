@@ -32,7 +32,11 @@ import java.util.List;
 @Table(name="ORGANIZERS", schema="APP" )
 // Define named queries here
 @NamedQueries ( {
-  @NamedQuery ( name="OrganizersEntity.countAll", query="SELECT COUNT(x) FROM OrganizersEntity x" )
+  @NamedQuery ( name="OrganizersEntity.countAll", query="SELECT COUNT(x) FROM OrganizersEntity x" ),
+  @NamedQuery ( name="OrganizersEntity.getUserByLogin", query="SELECT o FROM OrganizersEntity o where o.email = :uname and o.password = :pwd"),
+  @NamedQuery ( name="OrganizersEntity.getUserByUsername", query="SELECT o FROM OrganizersEntity o where o.email = :uname")
+
+  
 } )
 public class OrganizersEntity implements Serializable {
 

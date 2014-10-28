@@ -76,6 +76,7 @@ public class LoginControlleur extends HttpServlet {
 			uid = serviceLayer.validateSubscribe(un, pwd);
 			if(uid != null) {
 				request.getSession().setAttribute("uid", uid);
+				request.getSession().setAttribute("uname", un);
 				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
 				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
@@ -88,6 +89,7 @@ public class LoginControlleur extends HttpServlet {
 			if(uid != null) {
 				request.getSession().removeAttribute("toast");
 				request.getSession().setAttribute("uid", uid);
+				request.getSession().setAttribute("uname", un);
 				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
 				request.getSession().setAttribute("toast", "Nom d'utilisateur ou mot de passe invalides");
