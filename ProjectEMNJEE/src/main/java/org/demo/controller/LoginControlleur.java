@@ -3,6 +3,7 @@ package main.java.org.demo.controller;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.persistence.PersistenceServiceProvider;
 import main.java.org.demo.persistence.services.OrganizersPersistence;
-import main.java.org.demo.persistence.services.jpa.OrganizersPersistenceJPA;
+import main.java.org.demo.service.MainService;
+import main.java.org.demo.service.ServicesInterface;
 
 /**
  * Servlet implementation class LoginControlleur
@@ -41,6 +43,8 @@ public class LoginControlleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController [GET] - getLoginPage");
+		ServicesInterface serviceLayer = new MainService();
+		//TODO
 		RequestDispatcher rd;
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		rd.forward(request, response);
