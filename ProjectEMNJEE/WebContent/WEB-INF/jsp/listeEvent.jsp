@@ -8,12 +8,12 @@
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
 <title>Liste des évènements</title>
-<%@ include file="../jspf/barreHaut.jspf"%>
+
 </head>
 
 
 <body>
-
+<%@ include file="../jspf/barreHaut.jspf"%>
 	<div class="container">
 		<div class="list-group">
 			<a href="#" class="list-group-item"> Nom Event 1 </a> 

@@ -8,12 +8,12 @@
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
 <title>Inscription à un évènement</title>
-<%@ include file="../jspf/barreHaut.jspf"%>
+
 </head>
 
 
 <body>
-
+<%@ include file="../jspf/barreHaut.jspf"%>
 <div class="container">
 	<h3>Inscription à l'évènement 1</h3>
 
