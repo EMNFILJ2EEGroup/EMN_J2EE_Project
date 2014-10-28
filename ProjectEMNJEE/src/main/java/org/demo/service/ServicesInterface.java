@@ -1,6 +1,5 @@
 package main.java.org.demo.service;
 
-import java.util.Date;
 import java.util.List;
 
 import main.java.org.demo.bean.jpa.EventsEntity;
@@ -13,7 +12,7 @@ public interface ServicesInterface {
 	 * @param cryptedPwd - The crypted password
 	 * @return True if the crypted password (the token) correspond to the user.
 	 */
-	public boolean checkValidSession(int usernameId, String cryptedPwd);
+	public boolean checkValidSession(String uid);
 	
 	/**
 	 * Retrieve the crypted password of the user
@@ -28,7 +27,7 @@ public interface ServicesInterface {
 	 * @param pwd - The Password (in clear)
 	 * @return True if uname is in database and pwd is valid.
 	 */
-	public boolean checkLogin(String uname, String pwd);
+	public Integer checkLogin(String uname, String pwd);
 	
 	/**
 	 * Check if there is no existing user with the same username in DB and if the uname is correct, the
@@ -37,7 +36,7 @@ public interface ServicesInterface {
 	 * @param pwd - the user password (in clear)
 	 * @return true if the new user was correctly inserted in DB.
 	 */
-	public boolean validateSubscribe(String uname, String pwd);
+	public Integer validateSubscribe(String uname, String pwd);
 	
 	/**
 	 * Retrieve the list of published events from Db .
@@ -90,7 +89,8 @@ public interface ServicesInterface {
 	 * @param published - True if the event is public
 	 * @return True if the event was correctly added to the database
 	 */
-	public boolean validateNewEvent(int userId, String name, String addr, Date begin, Date end, boolean published);
+	public boolean validateNewEvent(int userId, String name, String addr,
+			String beginDate, String endDate, String beginHour, String endHour, int published);		;
 	
 	/**
 	 * Check if the userId is correct, the eventId too and if the user is the owner of the event.
@@ -115,4 +115,5 @@ public interface ServicesInterface {
 	 * @param eventId - The event Id
 	 */
 	public void publishEvent(int eventId);
+	
 }

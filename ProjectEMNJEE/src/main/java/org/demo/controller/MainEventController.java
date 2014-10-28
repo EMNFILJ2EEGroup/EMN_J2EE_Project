@@ -47,15 +47,9 @@ public class MainEventController extends HttpServlet {
 		List<EventsEntity> publishedEventsList = serviceLayer.getPublicEventList();
 		RequestDispatcher rd;
 		int eventID;
-		System.out.println("MainEventController [GET]");
-		
+
 		request.setAttribute("eventsList", publishedEventsList);
 		if (serviceLayer.checkEventIdValidity(rawEventID)) {
-			if(rawEventID == null) {
-				response.sendRedirect(request.getContextPath() + "/Error404.html");
-				request.getSession().removeAttribute("toast");
-				return;
-			}
 			eventID = Integer.parseInt(rawEventID);
 			EventsEntity event = serviceLayer.getEvent(eventID);
 			request.setAttribute("focusedEvent", event);
@@ -81,8 +75,6 @@ public class MainEventController extends HttpServlet {
 		String company = request.getParameter("company");
 		String rawEventID = request.getParameter("event");
 		int eventID;
-		
-		System.out.println("LoginController [POST] - begin");
 		
 		if (serviceLayer.checkEventIdValidity(rawEventID)) {
 			eventID = Integer.parseInt(rawEventID);

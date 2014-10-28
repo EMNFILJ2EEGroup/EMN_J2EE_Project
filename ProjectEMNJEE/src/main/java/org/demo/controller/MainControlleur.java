@@ -45,8 +45,6 @@ public class MainControlleur extends HttpServlet {
 		List<EventsEntity> publishedEventsList = serviceLayer.getPublicEventList();
 		RequestDispatcher rd;
 		
-		System.out.println("MainController [GET]");
-		
 		request.setAttribute("eventsList", publishedEventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		rd.forward(request, response);

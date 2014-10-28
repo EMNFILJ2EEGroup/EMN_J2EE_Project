@@ -35,7 +35,9 @@ import java.util.List;
 @Table(name="EVENTS", schema="APP" )
 // Define named queries here
 @NamedQueries ( {
-  @NamedQuery ( name="EventsEntity.countAll", query="SELECT COUNT(x) FROM EventsEntity x" )
+  @NamedQuery ( name="EventsEntity.countAll", query="SELECT COUNT(x) FROM EventsEntity x" ),
+  @NamedQuery ( name="EventsEntity.getAllPublished", query="SELECT e FROM EventsEntity e where e.publication = 1" ),
+  @NamedQuery ( name="EventsEntity.getEventById", query="SELECT e FROM EventsEntity e where e.id = :eventid" )
 } )
 public class EventsEntity implements Serializable {
 

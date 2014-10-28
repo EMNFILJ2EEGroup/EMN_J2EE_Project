@@ -34,7 +34,6 @@ public class logoutControlleur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LogoutController [GET] - logged out");
 		request.getSession().invalidate();
 		response.sendRedirect(request.getContextPath() + "/login");
 	}

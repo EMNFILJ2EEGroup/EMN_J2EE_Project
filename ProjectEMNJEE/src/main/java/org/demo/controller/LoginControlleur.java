@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.org.demo.bean.jpa.OrganizersEntity;
-import main.java.org.demo.persistence.PersistenceServiceProvider;
-import main.java.org.demo.persistence.services.OrganizersPersistence;
 import main.java.org.demo.service.MainService;
 import main.java.org.demo.service.ServicesInterface;
 
@@ -42,10 +39,15 @@ public class LoginControlleur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginController [GET] - getLoginPage");
 		ServicesInterface serviceLayer = new MainService();
-		//TODO
 		RequestDispatcher rd;
+
+		//Redirect people already logged
+		if(serviceLayer.checkValidSession((String)request.getAttribute("uid"))) {
+			response.sendRedirect(request.getContextPath() + "/main");
+			return;
+		}
+
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		rd.forward(request, response);
 		request.getSession().removeAttribute("toast");
@@ -55,57 +57,43 @@ public class LoginControlleur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginController [POST] - begin");
+		ServicesInterface serviceLayer = new MainService();
+		
+		//Redirect people already logged
+		if(serviceLayer.checkValidSession((String)request.getAttribute("uid"))) {
+			response.sendRedirect(request.getContextPath() + "/main");
+			return;
+		}
+		
 		String un = request.getParameter("username");
 		String pwd = request.getParameter("passwd");
 		String btn = request.getParameter("button");
-		
+		Integer uid = null;
+
 		if(btn.equals("Subscribe")) 
 		{
-			System.out.println("LoginController [POST] - subscribe");
 			request.getSession().removeAttribute("toast");
-			if(checkUserAlreadyExist(un)){
+			uid = serviceLayer.validateSubscribe(un, pwd);
+			if(uid != null) {
+				request.getSession().setAttribute("uid", uid);
+				response.sendRedirect(request.getContextPath() + "/main");
+			} else {
 				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
 				response.sendRedirect(request.getContextPath() + "/login");
-			}
-			else {
-				// TODO : Create user in BD
-				
-				OrganizersEntity usr = new OrganizersEntity();
-				usr.setEmail(un);
-				usr.setPassword(pwd);
-				OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
-				provider.save(usr);
-				
-				request.getSession().setAttribute("token", generateToken(un, pwd));
-				response.sendRedirect(request.getContextPath() + "/main");
 			}
 		} 
 		else 
 		{
-			if(checkLogin(un,pwd)) {
-				System.out.println("LoginController [POST] - correct");
+			uid = serviceLayer.checkLogin(un, pwd);
+			if(uid != null) {
 				request.getSession().removeAttribute("toast");
-				request.getSession().setAttribute("token", generateToken(un, pwd));
+				request.getSession().setAttribute("uid", uid);
 				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
-				System.out.println("LoginController [POST] - not correct");
 				request.getSession().setAttribute("toast", "Nom d'utilisateur ou mot de passe invalides");
 				response.sendRedirect(request.getContextPath() + "/login");
 			}
 		}
-	}
-
-	private String generateToken(String user, String mdp) {
-		return "plop"; //TODO
-	}
-
-	private boolean checkUserAlreadyExist(String user) {
-		return false; //TODO
-	}
-
-	private boolean checkLogin(String user, String mdp) { //TODO
-		return (user.equals("admin@a") && mdp.equals("test")) ? true : false;
 	}
 
 }
