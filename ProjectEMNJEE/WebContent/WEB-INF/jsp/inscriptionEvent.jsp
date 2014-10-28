@@ -8,20 +8,24 @@
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
 <title>Inscription à un évènement</title>
-<%@ include file="../jspf/barreHaut.jspf"%>
+
 </head>
 
 
 <body>
+<%@ include file="../jspf/barreHaut.jspf"%>
 
+<form id="inscriptionEvent_frm" action="${baseURL}/inscriptionEvent" method="post"
+		class="jumbotron" role="form">
 <div class="container">
-	<h3>Inscription à l'évènement 1</h3>
+	<h3>Inscription à l'évènement</h3>
 
 
 	<h5>Email</h5>
 	<div class="form-group input-group">
-		<input type="text" class="form-control" name="email" id="emailId">
-	</div>
+			<span class="input-group-addon">@</span> <input type="email"
+				class="form-control" name="email" id="emailId">
+		</div>
 
 	<h5>Nom</h5>
 	<div class="form-group input-group">
@@ -44,6 +48,6 @@
 			</div>
 		</div>
 	</div>
-
+</form>
 </body>
 </html>

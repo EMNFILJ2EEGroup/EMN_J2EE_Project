@@ -2,12 +2,14 @@
   <div class="container-fluid">    
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="">Créer un évènement</a></li>
-        <li><a href="">Liste des évènements</a></li>
+        <li><a href="${baseURL}/creerEvent">Créer un évènement</a></li>
+        <li><a href="${baseURL}/listeEvent">Liste des évènements</a></li>
       </ul>
+      <form name="deco" action="${baseURL}/deco">
       <ul class="nav navbar-form navbar-nav navbar-right">
-          <button type="button" class="btn btn-default">Déconnexion</button>
+          <button type="button" class="btn btn-default">Déconnexion</button> 
       </ul>
+       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
