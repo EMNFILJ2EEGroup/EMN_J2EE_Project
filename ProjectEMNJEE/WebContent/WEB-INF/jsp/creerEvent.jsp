@@ -12,10 +12,11 @@
 
 
 <body>
+<%@ include file="../jspf/barreHaut.jspf"%>
 <form id="creerEvent_frm" action="${baseURL}/creerEvent" method="post"
 		class="jumbotron" role="form">
 		
-<%@ include file="../jspf/barreHaut.jspf"%>
+
 
 <div class="container">
 	<h3>Création de l'évènement</h3>
