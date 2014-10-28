@@ -12,32 +12,45 @@
 
 
 <body>
-
+<form id="creerEvent_frm" action="${baseURL}/creerEvent" method="post"
+		class="jumbotron" role="form">
+		
 <%@ include file="../jspf/barreHaut.jspf"%>
+
 <div class="container">
-	<h3>Description de l'évènement</h3>
+	<h3>Création de l'évènement</h3>
 
 
 	<h5>Nom de l'évènement</h5>
-	<div class="form-group input-group">
+	<div class="input-group form-group">
 		<input type="text" class="form-control" name="nomEvent" id="nomEventId">
 	</div>
 
 	<h5>Adresse</h5>
-	<div class="form-group input-group">
+	<div class="input-group form-group">
 		<input type="text" class="form-control" name="adresseEvent" id="adresseEventId">
 	</div>
 
-	<h5>Date et heure de début</h5>
-	<div class="form-group input-group">
-		<input type="text" class="form-control" name="dateHeureDebut" id="dateHeureDebutId">
+	<h5>Date de début</h5>
+	<div class="input-group form-group">
+  		<input type="date" id="dateDebutId" name="dateDebut"><br>
 	</div>
 
-	<h5>Date et heure de fin</h5>
-	<div class="form-group input-group">
-		<input type="text" class="form-control" name="dateHeureFin" id="dateHeureFinId">
+	<h5>Heure de début</h5>
+	<div class="input-group form-group">
+  		<input type="time" id="heureDebutId" name="heureDebut"><br>
 	</div>
-	
+
+  	<h5>Date de fin</h5>
+	<div class="input-group form-group">
+  		<input type="date" id="dateFinId" name="dateFin"><br>
+	</div>
+
+<h5>Heure de fin</h5>
+	<div class="input-group form-group">
+  		<input type="time" id="heureFinId" name="heureFin"><br>
+	</div>
+
 		<div class="row formRow">
 			<div class="col-xs-12">
 				<input type="submit" id="creerPublier" name="button"
@@ -51,6 +64,6 @@
 			</div>
 		</div>
 	</div>
-
+</form>
 </body>
 </html>
