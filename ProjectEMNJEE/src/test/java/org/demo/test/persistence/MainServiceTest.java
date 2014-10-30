@@ -37,9 +37,9 @@ public class MainServiceTest {
 	private EventsEntity eventsEntity;
 	private OrganizersEntity organizersEntity;
 	private ParticipationsEntity participationsEntity;
-	List<EventsEntity> listeEventsEntities;
-	List<OrganizersEntity> listeOrganizersEntites;
-	List<ParticipationsEntity> listeParticipationsEntities;
+	List<EventsEntity> listeEventsEntities = new ArrayList<EventsEntity>();
+	List<OrganizersEntity> listeOrganizersEntites = new ArrayList<OrganizersEntity>();
+	List<ParticipationsEntity> listeParticipationsEntities = new ArrayList<ParticipationsEntity>();
 	EventsPersistence eventsPersistence = PersistenceServiceProvider.getService(EventsPersistence.class);
 	ParticipationsPersistence participationsPersistence = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
 	OrganizersPersistence organizersPersistence = PersistenceServiceProvider.getService(OrganizersPersistence.class);
@@ -50,57 +50,142 @@ public class MainServiceTest {
 		mainService = new MainService();
 
 		// Insertion des utilisateurs/organisateurs
-				organizersEntity = new OrganizersEntity();
-				organizersEntity.setEmail("organizer1@organizer1.fr");
-				organizersEntity.setPassword("organizer1");
-				organizersPersistence.insert(organizersEntity);
+		organizersEntity = new OrganizersEntity();
+		organizersEntity.setEmail("organizer1@organizer1.fr");
+		organizersEntity.setPassword("organizer1");
+		organizersPersistence.insert(organizersEntity);
+		listeOrganizersEntites.add(organizersEntity);
 
-				organizersEntity = new OrganizersEntity();
-				organizersEntity.setEmail("organizer2@organizer2.fr");
-				organizersEntity.setPassword("organizer2");
-				organizersPersistence.insert(organizersEntity);
+		organizersEntity = new OrganizersEntity();
+		organizersEntity.setEmail("organizer2@organizer2.fr");
+		organizersEntity.setPassword("organizer2");
+		organizersPersistence.insert(organizersEntity);
+		listeOrganizersEntites.add(organizersEntity);
 
-				// Insertion des évènements		
-				eventsEntity = new EventsEntity();
-				eventsEntity.setName("event1");
-				eventsEntity.setAdresse("toto");
-				eventsEntity.setDateDebut(new Date());
-				eventsEntity.setDateFin(new Date());
-				eventsEntity.setHeureDebut(new Date());
-				eventsEntity.setHeureFin(new Date());
-				eventsEntity.setPublication(1);
-				eventsEntity.setOrganizers(organizersEntity);
-				eventsPersistence.insert(eventsEntity);
+		// Insertion des évènements		
+		eventsEntity = new EventsEntity();
+		eventsEntity.setName("event1");
+		eventsEntity.setAdresse("toto");
+		eventsEntity.setDateDebut(new Date());
+		eventsEntity.setDateFin(new Date());
+		eventsEntity.setHeureDebut(new Date());
+		eventsEntity.setHeureFin(new Date());
+		eventsEntity.setPublication(1);
+		eventsEntity.setOrganizers(organizersEntity);
+		eventsPersistence.insert(eventsEntity);
+		listeEventsEntities.add(eventsEntity);
 
-				eventsEntity = new EventsEntity();
-				eventsEntity.setName("event2");
-				eventsEntity.setAdresse("tata");
-				eventsEntity.setDateDebut(new Date());
-				eventsEntity.setDateFin(new Date());
-				eventsEntity.setHeureDebut(new Date());
-				eventsEntity.setHeureFin(new Date());
-				eventsEntity.setPublication(0);
-				eventsEntity.setOrganizers(organizersEntity);
-				eventsPersistence.insert(eventsEntity);
+		eventsEntity = new EventsEntity();
+		eventsEntity.setName("event2");
+		eventsEntity.setAdresse("tata");
+		eventsEntity.setDateDebut(new Date());
+		eventsEntity.setDateFin(new Date());
+		eventsEntity.setHeureDebut(new Date());
+		eventsEntity.setHeureFin(new Date());
+		eventsEntity.setPublication(0);
+		eventsEntity.setOrganizers(organizersEntity);
+		eventsPersistence.insert(eventsEntity);
+		listeEventsEntities.add(eventsEntity);
 
-				// Insertion des participants
-				participationsEntity = new ParticipationsEntity();
-				participationsEntity.setEmail("participant1@participation1.fr");
-				participationsEntity.setNom("nomPart1");
-				participationsEntity.setPrenom("prenomPart1");
-				participationsEntity.setSociete("socPart1");
-				participationsEntity.setEvents(eventsEntity);
-				participationsPersistence.insert(participationsEntity);
+		// Insertion des participants
+		participationsEntity = new ParticipationsEntity();
+		participationsEntity.setEmail("participant1@participation1.fr");
+		participationsEntity.setNom("nomPart1");
+		participationsEntity.setPrenom("prenomPart1");
+		participationsEntity.setSociete("socPart1");
+		participationsEntity.setEvents(eventsEntity);
+		participationsPersistence.insert(participationsEntity);
+		listeParticipationsEntities.add(participationsEntity);
 
-				participationsEntity = new ParticipationsEntity();
-				participationsEntity.setEmail("participant2@participation2.fr");
-				participationsEntity.setNom("nomPart2");
-				participationsEntity.setPrenom("prenomPart2");
-				participationsEntity.setEvents(eventsEntity);
-				participationsPersistence.insert(participationsEntity);
+		participationsEntity = new ParticipationsEntity();
+		participationsEntity.setEmail("participant2@participation2.fr");
+		participationsEntity.setNom("nomPart2");
+		participationsEntity.setPrenom("prenomPart2");
+		participationsEntity.setEvents(eventsEntity);
+		participationsPersistence.insert(participationsEntity);
+		listeParticipationsEntities.add(participationsEntity);
 	}
 
-
+	@Test
+	public void validateUpdateEvent(){
+		assertFalse(mainService.validateUpdateEvent(eventsEntity.getId(), "maj", "test", "pasunedate", "2013-05-02", "10:00", "11:00", 0));
+	}
+	
+	@Test
+	public void testGetParticipationList(){
+		assertNotEquals(new ArrayList<ParticipationsEntity>(), mainService.getParticipationList(eventsEntity.getId()));
+	}
+	
+	@Test
+	public void testIsOwner(){
+		assertTrue(mainService.isOwner(eventsEntity.getId(), organizersEntity.getId()));
+		assertFalse(mainService.isOwner(eventsEntity.getId(), idNonExistant));
+	}
+	
+	@Test
+	public void testValidateNewEvent(){
+		assertFalse(mainService.validateNewEvent(organizersEntity.getId(), "test", "adresse", "pasunedate", "2014-05-06", "09:00", "12:00", 1));
+	}
+	
+	@Test
+	public void testGetUserEvents(){
+		assertNotEquals(new ArrayList<EventsEntity>(), mainService.getUserEvents(organizersEntity.getId()));
+	}
+	
+	@Test
+	public void testCheckValidSession(){
+		assertFalse(mainService.checkValidSession(null));
+		assertTrue(mainService.checkValidSession("test"));
+	}
+	
+	@Test
+	public void testValidateSubscribe(){
+		assertNotNull(mainService.validateSubscribe("organizer3@organizer3.fr", "organizer3"));
+		assertNull(mainService.validateSubscribe("organizer2@organizer2.fr", "organizer2"));
+	}
+	
+	@Test
+	public void testCheckUserExist(){
+		assertTrue(mainService.checkUserExist("organizer1@organizer1.fr"));
+		assertFalse(mainService.checkUserExist("nexistepaslemail@enbase.fr"));
+	}
+	
+	@Test
+	public void testCheckLogin(){	
+		assertEquals(organizersEntity.getId(), mainService.checkLogin("organizer2@organizer2.fr", "organizer2"));
+		assertNotEquals(idNonExistant, mainService.checkLogin("existepas@existe.fr", "existe"));
+		assertNotEquals(organizersEntity.getId(), mainService.checkLogin("existepasdutout@check.fr", "existepas"));
+	}
+	
+	@Test
+	public void testGetCryptedPassword(){
+		assertEquals("organizer2",mainService.getCryptedPassword(organizersEntity.getId().toString()));
+		assertNotEquals("paslebonmotdepasse",mainService.getCryptedPassword(organizersEntity.getId().toString()));
+	}
+	
+	@Test
+	public void testCheckEventSubscribe(){
+		assertTrue(mainService.checkEventSubscribe(eventsEntity.getId(), "testpart@testpart.fr", "prenomPart", "nomPart", "societePart"));
+		participationsEntity.setEmail("testsansarobase");
+		assertFalse(mainService.checkEventSubscribe(eventsEntity.getId(), participationsEntity.getEmail(), participationsEntity.getPrenom(), participationsEntity.getNom(), participationsEntity.getSociete()));
+	}
+	
+	@Test
+	public void testGetEvent() throws ParseException{
+		assertEquals(eventsEntity.getName(), mainService.getEvent(eventsEntity.getId()).getName());
+		assertEquals(eventsEntity.getAdresse(), mainService.getEvent(eventsEntity.getId()).getAdresse());
+		assertEquals(eventsEntity.getPublication(), mainService.getEvent(eventsEntity.getId()).getPublication());
+		assertNull(mainService.getEvent(idNonExistant));
+	}
+	
+	@Test
+	public void testCheckEventIdValidity(){
+		String valeurFausse = "projet";
+		String valeurVraie = "12";
+		assertFalse(mainService.checkEventIdValidity(valeurFausse));
+		assertTrue(mainService.checkEventIdValidity(valeurVraie));
+	}
+	
 	@Test
 	public void testGetPublicEventList(){
 		if(mainService.getPublicEventList()!=null && !mainService.getPublicEventList().isEmpty()){
@@ -110,227 +195,14 @@ public class MainServiceTest {
 		}
 	}
 
-	@Test
-	public void testCheckEventIdValidity(){
-		String valeurFausse = "projet";
-		String valeurVraie = "12";
-		assertFalse(mainService.checkEventIdValidity(valeurFausse));
-		assertTrue(mainService.checkEventIdValidity(valeurVraie));
-	}
-
-	@Test
-	public void testGetEvent() throws ParseException{
-
-		organizersEntity = new OrganizersEntity();
-		organizersEntity.setEmail("orgTest@org.fr");
-		organizersEntity.setPassword("orgTest");
-		organizersPersistence.insert(organizersEntity);
-
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdfHeure = new SimpleDateFormat("HH:mm");
-
-		eventsEntity = new EventsEntity();
-		eventsEntity.setName("eventTest");
-		eventsEntity.setAdresse("hihihi");
-		eventsEntity.setDateDebut(sdfDate.parse("2014-10-15"));
-		eventsEntity.setDateFin(sdfDate.parse("2014-10-16"));
-		eventsEntity.setHeureDebut(sdfHeure.parse("12:00"));
-		eventsEntity.setHeureFin(sdfHeure.parse("12:00"));
-		eventsEntity.setPublication(1);
-		eventsEntity.setOrganizers(organizersEntity);
-		eventsEntity.setListOfParticipations(null);
-		eventsPersistence.insert(eventsEntity);
-
-		assertEquals(eventsEntity.getName(), mainService.getEvent(eventsEntity.getId()).getName());
-		assertEquals(eventsEntity.getAdresse(), mainService.getEvent(eventsEntity.getId()).getAdresse());
-		assertEquals(eventsEntity.getPublication(), mainService.getEvent(eventsEntity.getId()).getPublication());
-		assertNull(mainService.getEvent(idNonExistant));
-
-	}
-
-	@Test
-	public void testCheckEventSubscribe(){
-		organizersEntity = new OrganizersEntity();
-		organizersEntity.setEmail("orgtest@orgtest.fr");
-		organizersEntity.setPassword("orgTest");
-		organizersPersistence.insert(organizersEntity);
-		
-		eventsEntity = new EventsEntity();
-		eventsEntity.setName("eventTest");
-		eventsEntity.setAdresse("test");
-		eventsEntity.setDateDebut(new Date());
-		eventsEntity.setDateFin(new Date());
-		eventsEntity.setHeureDebut(new Date());
-		eventsEntity.setHeureFin(new Date());
-		eventsEntity.setPublication(1);
-		eventsEntity.setOrganizers(organizersEntity);
-		eventsPersistence.insert(eventsEntity);
-		
-		participationsEntity = new ParticipationsEntity();
-		participationsEntity.setEmail("parttest@parttest.fr");
-		participationsEntity.setNom("nomPartTest");
-		participationsEntity.setPrenom("prenomPartTest");
-		participationsEntity.setEvents(eventsEntity);
-		assertTrue(mainService.checkEventSubscribe(eventsEntity.getId(), participationsEntity.getEmail(), participationsEntity.getPrenom(), participationsEntity.getNom(), participationsEntity.getSociete()));
-
-		participationsEntity.setEmail("test");
-		assertFalse(mainService.checkEventSubscribe(eventsEntity.getId(), participationsEntity.getEmail(), participationsEntity.getPrenom(), participationsEntity.getNom(), participationsEntity.getSociete()));
-	}
-
-		@Test
-		public void testGetCryptedPassword(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("orgTest@orgTest.fr");
-			organizersEntity.setPassword("CRYPTED");
-			organizersPersistence.insert(organizersEntity);
-			assertEquals("CRYPTED",mainService.getCryptedPassword(organizersEntity.getId().toString()));
-		}
-		
-		@Test
-		public void testCheckLogin(){	
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("existe@existe.fr");
-			organizersEntity.setPassword("existe");
-			organizersPersistence.insert(organizersEntity);
-			
-			assertEquals(organizersEntity.getId(), mainService.checkLogin("existe@existe.fr", "existe"));
-			assertNotEquals(idNonExistant, mainService.checkLogin("existepas@existe.fr", "existe"));
-			assertNotEquals(organizersEntity.getId(), mainService.checkLogin("existepasdutout@check.fr", "existepas"));
-			
-		}
-		
-		@Test
-		public void testCheckUserExist(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("existemail@existe.fr");
-			organizersEntity.setPassword("neSertPasIci");
-			organizersPersistence.insert(organizersEntity);
-			
-			assertTrue(mainService.checkUserExist("existemail@existe.fr"));
-			assertFalse(mainService.checkUserExist("nexistepaslemail@enbase.fr"));
-		}
-		
-		@Test
-		public void testValidateSubscribe(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("existeid@existeid.fr");
-			organizersEntity.setPassword("existeid");
-
-			assertNotNull(mainService.validateSubscribe("existeid@existeid.fr", "existeid"));
-			assertNull(mainService.validateSubscribe("existeid@existeid.fr", "existeid"));
-		}
-		
-		@Test
-		public void testCheckValidSession(){
-			assertFalse(mainService.checkValidSession(null));
-			assertTrue(mainService.checkValidSession("test"));
-		}
-		
-		@Test
-		public void testGetUserEvents(){
-			
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("orgevent@orgevent.fr");
-			organizersEntity.setPassword("orgEvent");
-			organizersPersistence.insert(organizersEntity);
-			
-			eventsEntity = new EventsEntity();
-			eventsEntity.setName("eventTest");
-			eventsEntity.setAdresse("test");
-			eventsEntity.setDateDebut(new Date());
-			eventsEntity.setDateFin(new Date());
-			eventsEntity.setHeureDebut(new Date());
-			eventsEntity.setHeureFin(new Date());
-			eventsEntity.setPublication(0);
-			eventsEntity.setOrganizers(organizersEntity);
-			eventsPersistence.insert(eventsEntity);
-			
-			assertEquals(organizersEntity.getListOfEvents(), mainService.getUserEvents(organizersEntity.getId()));
-		}
-		
-		@Test
-		public void testValidateNewEvent(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("orgnewevent@orgnewevent.fr");
-			organizersEntity.setPassword("orgNewEvent");
-			organizersPersistence.insert(organizersEntity);
-			
-			assertFalse(mainService.validateNewEvent(organizersEntity.getId(), "test", "adresse", "pasunedate", "2014-05-06", "09:00", "12:00", 1));
-		}
-		
-		@Test
-		public void testRemoveEvent(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("orgnewevent@orgnewevent.fr");
-			organizersEntity.setPassword("orgNewEvent");
-			organizersPersistence.insert(organizersEntity);
-			
-			eventsEntity = new EventsEntity();
-			eventsEntity.setName("eventASupprimer");
-			eventsEntity.setAdresse("test");
-			eventsEntity.setDateDebut(new Date());
-			eventsEntity.setDateFin(new Date());
-			eventsEntity.setHeureDebut(new Date());
-			eventsEntity.setHeureFin(new Date());
-			eventsEntity.setPublication(0);
-			eventsEntity.setOrganizers(organizersEntity);
-			eventsPersistence.insert(eventsEntity);
-			
-			assertTrue(mainService.removeEvent(eventsEntity.getId(), organizersEntity.getId()));
-			assertFalse(mainService.removeEvent(idNonExistant, idNonExistant));
-		}
-		
-		@Test
-		public void testIsOwner(){
-			organizersEntity = new OrganizersEntity();
-			organizersEntity.setEmail("orgnewevent@orgnewevent.fr");
-			organizersEntity.setPassword("orgNewEvent");
-			organizersPersistence.insert(organizersEntity);
-			
-			eventsEntity = new EventsEntity();
-			eventsEntity.setName("eventIsOwner");
-			eventsEntity.setAdresse("test");
-			eventsEntity.setDateDebut(new Date());
-			eventsEntity.setDateFin(new Date());
-			eventsEntity.setHeureDebut(new Date());
-			eventsEntity.setHeureFin(new Date());
-			eventsEntity.setPublication(0);
-			eventsEntity.setOrganizers(organizersEntity);
-			eventsPersistence.insert(eventsEntity);
-			
-			assertTrue(mainService.isOwner(eventsEntity.getId(), organizersEntity.getId()));
-			assertFalse(mainService.isOwner(eventsEntity.getId(), idNonExistant));
-		}
-		
-		@Test
-		public void testPublishEvent(){
-			mainService.publishEvent(eventsEntity.getId());
-			assertEquals(publication, eventsEntity.getPublication());
-		}
-
-
 	@After
 	public void tearDown(){
 		// On supprime toutes les données de la base
-		List<ParticipationsEntity> listePE = participationsPersistence.loadAll();
-		if(listePE!=null && !listePE.isEmpty()){
-			for(ParticipationsEntity pe : listePE){
-				participationsPersistence.delete(pe.getId());
-			}
-		}
-
-		List<EventsEntity> listeEE = eventsPersistence.loadAll();
-		if(listeEE!=null && !listeEE.isEmpty()){
-			for(EventsEntity ee : listeEE){
-				eventsPersistence.delete(ee.getId());
-			}
-		}
-
-		List<OrganizersEntity> listeOE = organizersPersistence.loadAll();
-		if(listeOE!=null && !listeOE.isEmpty()){
-			for(OrganizersEntity oe : listeOE){
-				organizersPersistence.delete(oe.getId());
-			}
-		}
+		participationsPersistence.delete(participationsEntity.getId()-1);
+		participationsPersistence.delete(participationsEntity.getId());
+		eventsPersistence.delete(eventsEntity.getId()-1);
+		eventsPersistence.delete(eventsEntity.getId());
+		organizersPersistence.delete(organizersEntity.getId()-1);
+		organizersPersistence.delete(organizersEntity.getId());
 	}
 }
