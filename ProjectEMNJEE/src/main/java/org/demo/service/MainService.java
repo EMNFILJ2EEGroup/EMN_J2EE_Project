@@ -15,12 +15,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.apache.derby.tools.sysinfo;
 import org.hibernate.Hibernate;
 
 import main.java.org.demo.bean.jpa.EventsEntity;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.bean.jpa.ParticipationsEntity;
 import main.java.org.demo.persistence.PersistenceServiceProvider;
+import main.java.org.demo.persistence.services.EventsPersistence;
 import main.java.org.demo.persistence.services.OrganizersPersistence;
 import main.java.org.demo.persistence.services.ParticipationsPersistence;
 import main.java.org.demo.persistence.services.jpa.EventsPersistenceJPA;
@@ -149,6 +151,7 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public boolean checkValidSession(String uid) {
+		System.out.println("uid="+uid);
 		if(uid != null) 
 			if(!uid.equalsIgnoreCase(""))
 				return true;
@@ -157,11 +160,19 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public List<EventsEntity> getUserEvents(int usernameId) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit1");
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("EventsEntity.getAllByUserId");
+		q.setParameter("uid", usernameId);
+		List<EventsEntity> res = q.getResultList();
+		if(res.isEmpty()) return null;
+		else return res;
+		/*
 		OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);		
 		OrganizersEntity organizer=  provider.load(usernameId);
-		//Hibernate.initialize(organizer);
+		Hibernate.initialize(organizer);
 		List<EventsEntity> events = organizer.getListOfEvents();
-		return events;
+		return events;*/
 	}
 
 	@Override
@@ -170,17 +181,20 @@ public class MainService implements ServicesInterface{
 		if (name == null || addr == null || beginDate == null || endDate == null|| beginHour == null || endHour == null)
 			return false;
 		
+		EventsPersistence eventProvider = PersistenceServiceProvider.getService(EventsPersistence.class);
+		OrganizersPersistence userProvider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
+		
 		EventsEntity event = new EventsEntity();
 		event.setName(name);
 		event.setAdresse(addr);
 		
-		OrganizersEntity user = new OrganizersPersistenceJPA().load(userId);
+		OrganizersEntity user = userProvider.load(userId);
 		if (user == null)
 			return false;
 		event.setOrganizers(user);
-
-		SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat sdfHour = new SimpleDateFormat("hh:mm:s");
+		
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfHeure = new SimpleDateFormat("HH:mm");
 		Date begDateSDF;
 		Date endDateSDF;
 		Date begHourSDF;
@@ -188,15 +202,19 @@ public class MainService implements ServicesInterface{
 		try {
 			begDateSDF = sdfDate.parse(beginDate);
 			endDateSDF = sdfDate.parse(endDate);
-			begHourSDF = sdfHour.parse(beginDate);
-			endHourSDF = sdfHour.parse(endDate);
+			begHourSDF = sdfHeure.parse(beginHour);
+			endHourSDF = sdfHeure.parse(endHour);
 		}
 		catch (ParseException e) { return false; }
 		if (begDateSDF.after(endDateSDF) || (begDateSDF.compareTo(endDateSDF)==0 && begHourSDF.after(endHourSDF))) 
 			return false;
-		event.setDateDebut(begDateSDF);;
-		event.setDateFin(begDateSDF);
+		event.setDateDebut(begDateSDF);
+		event.setDateFin(endDateSDF);
+		event.setHeureDebut(begHourSDF);
+		event.setHeureFin(endHourSDF);
 		event.setPublication(published);
+		
+		eventProvider.insert(event);
 		return true;
 	}
 

@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+
+		
+			<a href="${baseURL}/panel/new">
+				<button type="button" class="btn btn-success createButton">+
+				</button>
+			</a>
+			<ul class="nav navbar-nav">
+				<li><a href="${baseURL}/panel">Page de gestion</a></li>
+				<li><a href="${baseURL}/main">Page principale</a></li>
+			</ul>
+			<a href="${baseURL}/logout">
+				<button type="button" class="btn btn-default connectButton">Déconnexion
+					${sessionScope.uname}</button>
+			</a>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid -->
+</nav>

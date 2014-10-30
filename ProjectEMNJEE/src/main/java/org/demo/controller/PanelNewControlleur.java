@@ -16,16 +16,16 @@ import main.java.org.demo.service.MainService;
 import main.java.org.demo.service.ServicesInterface;
 
 /**
- * Servlet implementation class PanelControlleur
+ * Servlet implementation class PanelNewControlleur
  */
-@WebServlet("/panel")
-public class PanelControlleur extends HttpServlet {
+@WebServlet("/panel/new")
+public class PanelNewControlleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PanelControlleur() {
+    public PanelNewControlleur() {
         super();
     }
 
@@ -45,7 +45,7 @@ public class PanelControlleur extends HttpServlet {
 		RequestDispatcher rd;
 		
 		request.setAttribute("myEventsList", myeventsList);
-		rd = request.getRequestDispatcher("/WEB-INF/jsp/panel.jsp");
+		rd = request.getRequestDispatcher("/WEB-INF/jsp/panelNew.jsp");
 		rd.forward(request, response);
 		request.getSession().removeAttribute("toast");
 	}
@@ -54,7 +54,37 @@ public class PanelControlleur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//NOTHING TO DO
+		ServicesInterface serviceLayer = new MainService();
+		request.getSession().removeAttribute("toast");
+		
+		String nom = request.getParameter("nomEvent");
+		String addr = request.getParameter("adresseEvent");
+		String begD = request.getParameter("dateDebut");
+		String begH = request.getParameter("heureDebut");
+		String endD = request.getParameter("dateFin");
+		String endH = request.getParameter("heureFin");
+		String btn = request.getParameter("button");
+		int published = 0;
+		Integer uid = (Integer)request.getSession().getAttribute("uid");
+		
+		if(btn.equals("both")) published = 1;
+		System.out.println(nom);
+		System.out.println(addr);
+		System.out.println(begD);
+		System.out.println(begH);
+		System.out.println(endD);
+		System.out.println(endH);
+		System.out.println(published);
+		
+		boolean result = serviceLayer.validateNewEvent(uid, nom, addr, begD, endD, begH, endH, published);
+		if(result) {
+			request.getSession().setAttribute("toast", "Votre évènement a bien été crée !");
+			response.sendRedirect(request.getContextPath() + "/panel");
+		} else {
+			request.getSession().setAttribute("toast", "Votre évènement n'a pas été crée, certains champs sont incorrectes...");
+			response.sendRedirect(request.getContextPath() + "/panel/new");
+		}
+		
 	}
 
 }

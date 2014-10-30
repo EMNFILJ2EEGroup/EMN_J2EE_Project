@@ -43,7 +43,7 @@ public class LoginControlleur extends HttpServlet {
 		RequestDispatcher rd;
 
 		//Redirect people already logged
-		if(serviceLayer.checkValidSession((String)request.getAttribute("uid"))) {
+		if(serviceLayer.checkValidSession((String)request.getSession().getAttribute("uid"))) {
 			response.sendRedirect(request.getContextPath() + "/main");
 			return;
 		}

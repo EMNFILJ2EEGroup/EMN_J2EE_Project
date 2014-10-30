@@ -29,9 +29,10 @@ import javax.persistence.*;
 @NamedQueries ( {
   @NamedQuery ( name="EventsEntity.countAll", query="SELECT COUNT(x) FROM EventsEntity x" ),
   @NamedQuery ( name="EventsEntity.getAllPublished", query="SELECT e FROM EventsEntity e where e.publication = 1" ),
-  @NamedQuery ( name="EventsEntity.getEventById", query="SELECT e FROM EventsEntity e where e.id = :eventid" )
-
+  @NamedQuery ( name="EventsEntity.getEventById", query="SELECT e FROM EventsEntity e where e.id = :eventid" ),
+  @NamedQuery ( name="EventsEntity.getAllByUserId", query="SELECT e FROM EventsEntity e where e.organizers.id = :uid")
 } )
+
 public class EventsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

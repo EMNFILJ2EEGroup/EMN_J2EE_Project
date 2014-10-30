@@ -33,6 +33,12 @@
 
 
 .connectButton {
-	margin-top: 6px;
+	margin-top: 8px;
 	float: right;
+}
+
+.createButton {
+	margin-top: 8px;
+	margin-right: 10px;
+	float: left;
 }

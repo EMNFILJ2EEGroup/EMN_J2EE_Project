@@ -13,12 +13,12 @@
 
 
 <body>
-	<%@ include file="../jspf/barreHaut.jspf"%>
-	<h1>Page de gestion</h1> <br/>
+	<%@ include file="../jspf/barreHautPanel.jspf"%>
+	<center><h1>Page de gestion</h1></center> <br/>
 	
 	<h1>Liste de mes évènements</h1>
 	<c:if test="${ ! empty sessionScope.toast }">
-		<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toast}</div>
+		<div id="msgbox" class="alert alert-warning" role="alert">${sessionScope.toast}</div>
 	</c:if>
 	<div class="container">
 		<div class="list-group">
