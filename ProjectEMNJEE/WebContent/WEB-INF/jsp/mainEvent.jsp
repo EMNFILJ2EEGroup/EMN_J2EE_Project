@@ -3,33 +3,74 @@
 <html>
 
 <%@ include file="../jspf/commonHeader.jspf"%>
-<title>Main Event </title>
+<script type="text/javascript"
+	src="${baseURL}/lib/js/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${baseURL}/lib/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${baseURL}/css/event.css">
+<title>Page de l'evenement</title>
 </head>
 
 
 <body>
-	<center>
-		<div>ICI bandeau du haut</div>
-		
-		<h1>/main/event -> mainEvent.jsp</h1>
-		<h3>
-			<a href="${baseURL}/logout">Logout</a>
-		</h3>
-
+	<%@ include file="../jspf/barreHaut.jspf"%>
 	<h1>Liste des events publiés</h1>
-		<c:if test="${ ! empty requestScope.eventsList }">
-			<c:forEach var="item" items="${requestScope['eventsList']}">
-				<p>${item.name}></p>
+	<c:if test="${ ! empty sessionScope.toast }">
+		<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toast}</div>
+	</c:if>
+	<div class="container">
+		<div class="list-group">
+			<c:forEach var="event" items="${requestScope['eventsList']}">
+				<a href="${baseURL}/main/info?event=${event.id}"
+					class="list-group-item"> ${event.name} </a>
 			</c:forEach>
-		</c:if>
-		<c:if test="${ empty requestScope.eventsList }">
-			<p>Aucun evenements publiés</p>
-		</c:if>
-			<h1>Evenement trouvé !!! </h1>
-			<p> (sinon automatiquement redirigé vers 404)</p>
-			<h1>Affichage evenement </h1>
+		</div>
 
-			<h1>Formulaire inscription evenement</h1>
-	</center>
+		<div class="eventContainer">
+			<h2>${requestScope.focusedEvent.name}</h2>
+			<p>adresse : ${requestScope.focusedEvent.adresse}</p>
+			<p id="schedule">${requestScope.focusedEvent.dateDebut}
+				${requestScope.focusedEvent.heureDebut} -->
+				${requestScope.focusedEvent.dateFin}
+				${requestScope.focusedEvent.heureFin}</p>
+		</div>
+		<form id="inscriptionEvent_frm"
+			action="${baseURL}/main/info?event=${requestScope.focusedEvent.id}" method="post"
+			class="jumbotron" role="form">
+			<div class="container">
+				<h3>Inscription à l'évènement</h3>
+
+				<div class="form-group input-group">
+					<span class="input-group-addon">@</span> <input type="email"
+						class="form-control" name="email" id="emailId"
+						placeholder="name@domain.com">
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon"> Nom </span> <input type="text"
+						class="form-control" name="name" id="nomId">
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon"> Prénom </span> <input type="text"
+						class="form-control" name="fname" id="prenomId">
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon"> Société </span> <input type="text"
+						class="form-control" name="company" id="societeId">
+				</div>
+				<div class="form-group input-group">
+					<input type="hidden" class="form-control" name="relatedEvent"
+						id="relatedEventId" value="${requestScope.focusedEvent.id}">
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-6 col-xs-offset-3">
+						<input type="submit" id="enregistrer" name="button"
+							class="frm_btns btn btn-success" value="Enregistrer" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

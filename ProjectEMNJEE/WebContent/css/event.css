@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+	
+.eventContainer {
+	border : 2px solid grey;
+	border-radius : 5px;
+	padding : 10px;
+}
+
+.eventContainer h2{
+	text-align : center
+}
+
+#schedule{
+	text-align : center
+}

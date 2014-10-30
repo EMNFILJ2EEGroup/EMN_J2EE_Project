@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Telosys Database Repository --><root>
-<tableList databaseId="0" databaseName="DERBY" databaseProductName="Apache Derby" generation="2014-10-21 13:08:12">
+<tableList databaseId="0" databaseName="DERBY" databaseProductName="Apache Derby" generation="2014-10-29 23:41:05">
 <table catalog="" databaseType="TABLE" javaBean="Events" name="EVENTS" schema="APP">
-<column dbDefaultValue="" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
+<column dbAutoIncremented="true" dbDefaultValue="AUTOINCREMENT: start 1 increment 1" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
 <column dbDefaultValue="" dbName="NAME" dbNotNull="true" dbPosition="2" dbSize="100" dbTypeName="VARCHAR" inputType="text" javaName="name" javaType="java.lang.String" jdbcTypeCode="12" label="Name" maxLength="100" notEmpty="true" notNull="true" selected="true"/>
 <column dbDefaultValue="0" dbName="PUBLICATION" dbNotNull="true" dbPosition="3" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="publication" javaType="java.lang.Integer" jdbcTypeCode="4" label="Publication" notNull="true" selected="true"/>
-<column dbDefaultValue="" dbName="URL" dbNotNull="true" dbPosition="4" dbSize="100" dbTypeName="VARCHAR" inputType="text" javaName="url" javaType="java.lang.String" jdbcTypeCode="12" label="Url" maxLength="100" notEmpty="true" notNull="true" selected="true"/>
-<column dbDefaultValue="" dbName="ADRESSE" dbNotNull="false" dbPosition="5" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="adresse" javaType="java.lang.String" jdbcTypeCode="12" label="Adresse" maxLength="255" notNull="false" selected="true"/>
-<column dateType="D" dbDefaultValue="" dbName="DATE_DEBUT" dbNotNull="true" dbPosition="6" dbSize="10" dbTypeName="DATE" inputType="date" javaName="dateDebut" javaType="java.util.Date" jdbcTypeCode="91" label="Date Debut" notNull="true" selected="true"/>
-<column dateType="T" dbDefaultValue="" dbName="HEURE_DEBUT" dbNotNull="true" dbPosition="7" dbSize="8" dbTypeName="TIME" inputType="time" javaName="heureDebut" javaType="java.util.Date" jdbcTypeCode="92" label="Heure Debut" notNull="true" selected="true"/>
-<column dateType="D" dbDefaultValue="" dbName="DATE_FIN" dbNotNull="true" dbPosition="8" dbSize="10" dbTypeName="DATE" inputType="date" javaName="dateFin" javaType="java.util.Date" jdbcTypeCode="91" label="Date Fin" notNull="true" selected="true"/>
-<column dateType="T" dbDefaultValue="" dbName="HEURE_FIN" dbNotNull="true" dbPosition="9" dbSize="8" dbTypeName="TIME" inputType="time" javaName="heureFin" javaType="java.util.Date" jdbcTypeCode="92" label="Heure Fin" notNull="true" selected="true"/>
-<column dbDefaultValue="" dbForeignKey="true" dbName="FK_ORGANIZER" dbNotNull="true" dbPosition="10" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="fkOrganizer" javaType="java.lang.Integer" jdbcTypeCode="4" label="Fk Organizer" notNull="true" selected="true"/>
-<fk name="SQL141027135845861">
+<column dbDefaultValue="" dbName="ADRESSE" dbNotNull="false" dbPosition="4" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="adresse" javaType="java.lang.String" jdbcTypeCode="12" label="Adresse" maxLength="255" notNull="false" selected="true"/>
+<column dateType="D" dbDefaultValue="" dbName="DATE_DEBUT" dbNotNull="true" dbPosition="5" dbSize="10" dbTypeName="DATE" inputType="date" javaName="dateDebut" javaType="java.util.Date" jdbcTypeCode="91" label="Date Debut" notNull="true" selected="true"/>
+<column dateType="T" dbDefaultValue="" dbName="HEURE_DEBUT" dbNotNull="true" dbPosition="6" dbSize="8" dbTypeName="TIME" inputType="time" javaName="heureDebut" javaType="java.util.Date" jdbcTypeCode="92" label="Heure Debut" notNull="true" selected="true"/>
+<column dateType="D" dbDefaultValue="" dbName="DATE_FIN" dbNotNull="true" dbPosition="7" dbSize="10" dbTypeName="DATE" inputType="date" javaName="dateFin" javaType="java.util.Date" jdbcTypeCode="91" label="Date Fin" notNull="true" selected="true"/>
+<column dateType="T" dbDefaultValue="" dbName="HEURE_FIN" dbNotNull="true" dbPosition="8" dbSize="8" dbTypeName="TIME" inputType="time" javaName="heureFin" javaType="java.util.Date" jdbcTypeCode="92" label="Heure Fin" notNull="true" selected="true"/>
+<column dbDefaultValue="" dbForeignKey="true" dbName="FK_ORGANIZER" dbNotNull="true" dbPosition="9" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="fkOrganizer" javaType="java.lang.Integer" jdbcTypeCode="4" label="Fk Organizer" notNull="true" selected="true"/>
+<fk name="SQL141029233840610">
 <fkcol colname="FK_ORGANIZER" colref="ID" deferrable="7" deleterule="3" sequence="1" tablename="EVENTS" tableref="ORGANIZERS" updaterule="3"/>
 </fk>
-<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="SQL141020174648962" id="LINK_FK_SQL141020174648962_O" inverseSideOf="" javaName="organizers" javaType="Organizers" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="EVENTS" targetEntity="Organizers" targetTableName="ORGANIZERS" used="true">
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="SQL141029233845581" id="LINK_FK_SQL141029233845581_I" inverseSideOf="LINK_FK_SQL141029233845581_O" javaName="listOfParticipations" javaType="java.util.List" joinTableName="" mappedBy="events" optional="UNDEFINED" owningSide="false" sourceTableName="EVENTS" targetEntity="Participations" targetTableName="PARTICIPATIONS" used="true"/>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="SQL141029233840610" id="LINK_FK_SQL141029233840610_O" inverseSideOf="" javaName="organizers" javaType="Organizers" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="EVENTS" targetEntity="Organizers" targetTableName="ORGANIZERS" used="true">
 <joinColumns>
 <joinColumn insertable="false" name="FK_ORGANIZER" nullable="true" referencedColumnName="ID" unique="false" updatable="false"/>
 </joinColumns>
 </link>
-<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="SQL141020174650491" id="LINK_FK_SQL141020174650491_I" inverseSideOf="LINK_FK_SQL141020174650491_O" javaName="listOfParticipations" javaType="java.util.List" joinTableName="" mappedBy="events" optional="UNDEFINED" owningSide="false" sourceTableName="EVENTS" targetEntity="Participations" targetTableName="PARTICIPATIONS" used="true"/>
 </table>
 <table catalog="" databaseType="TABLE" javaBean="Organizers" name="ORGANIZERS" schema="APP">
-<column dbDefaultValue="" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
+<column dbAutoIncremented="true" dbDefaultValue="AUTOINCREMENT: start 1 increment 1" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
 <column dbDefaultValue="" dbName="EMAIL" dbNotNull="true" dbPosition="2" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="email" javaType="java.lang.String" jdbcTypeCode="12" label="Email" maxLength="255" notEmpty="true" notNull="true" selected="true"/>
 <column dbDefaultValue="" dbName="PASSWORD" dbNotNull="true" dbPosition="3" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="password" javaType="java.lang.String" jdbcTypeCode="12" label="Password" maxLength="255" notEmpty="true" notNull="true" selected="true"/>
-<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="SQL141020174648962" id="LINK_FK_SQL141020174648962_I" inverseSideOf="LINK_FK_SQL141020174648962_O" javaName="listOfEvents" javaType="java.util.List" joinTableName="" mappedBy="organizers" optional="UNDEFINED" owningSide="false" sourceTableName="ORGANIZERS" targetEntity="Events" targetTableName="EVENTS" used="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="SQL141029233840610" id="LINK_FK_SQL141029233840610_I" inverseSideOf="LINK_FK_SQL141029233840610_O" javaName="listOfEvents" javaType="java.util.List" joinTableName="" mappedBy="organizers" optional="UNDEFINED" owningSide="false" sourceTableName="ORGANIZERS" targetEntity="Events" targetTableName="EVENTS" used="true"/>
 </table>
 <table catalog="" databaseType="TABLE" javaBean="Participations" name="PARTICIPATIONS" schema="APP">
-<column dbDefaultValue="" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
-<column dbDefaultValue="" dbName="EMAIL" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="email" javaType="java.lang.String" jdbcTypeCode="12" label="Email" maxLength="255" notEmpty="true" notNull="true" selected="true"/>
+<column dbAutoIncremented="true" dbDefaultValue="AUTOINCREMENT: start 1 increment 1" dbName="ID" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
+<column dbDefaultValue="" dbName="EMAIL" dbNotNull="false" dbPosition="2" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="email" javaType="java.lang.String" jdbcTypeCode="12" label="Email" maxLength="255" notNull="false" selected="true"/>
 <column dbDefaultValue="" dbName="NOM" dbNotNull="true" dbPosition="3" dbSize="100" dbTypeName="VARCHAR" inputType="text" javaName="nom" javaType="java.lang.String" jdbcTypeCode="12" label="Nom" maxLength="100" notEmpty="true" notNull="true" selected="true"/>
 <column dbDefaultValue="" dbName="PRENOM" dbNotNull="true" dbPosition="4" dbSize="100" dbTypeName="VARCHAR" inputType="text" javaName="prenom" javaType="java.lang.String" jdbcTypeCode="12" label="Prenom" maxLength="100" notEmpty="true" notNull="true" selected="true"/>
 <column dbDefaultValue="" dbName="SOCIETE" dbNotNull="false" dbPosition="5" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="societe" javaType="java.lang.String" jdbcTypeCode="12" label="Societe" maxLength="255" notNull="false" selected="true"/>
 <column dbDefaultValue="" dbForeignKey="true" dbName="FK_EVENT" dbNotNull="true" dbPosition="6" dbSize="10" dbTypeName="INTEGER" inputType="number" javaName="fkEvent" javaType="java.lang.Integer" jdbcTypeCode="4" label="Fk Event" notNull="true" selected="true"/>
-<fk name="SQL141027135847381">
+<fk name="SQL141029233845581">
 <fkcol colname="FK_EVENT" colref="ID" deferrable="7" deleterule="3" sequence="1" tablename="PARTICIPATIONS" tableref="EVENTS" updaterule="3"/>
 </fk>
-<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="SQL141020174650491" id="LINK_FK_SQL141020174650491_O" inverseSideOf="" javaName="events" javaType="Events" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="PARTICIPATIONS" targetEntity="Events" targetTableName="EVENTS" used="true">
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="SQL141029233845581" id="LINK_FK_SQL141029233845581_O" inverseSideOf="" javaName="events" javaType="Events" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="PARTICIPATIONS" targetEntity="Events" targetTableName="EVENTS" used="true">
 <joinColumns>
 <joinColumn insertable="false" name="FK_EVENT" nullable="true" referencedColumnName="ID" unique="false" updatable="false"/>
 </joinColumns>

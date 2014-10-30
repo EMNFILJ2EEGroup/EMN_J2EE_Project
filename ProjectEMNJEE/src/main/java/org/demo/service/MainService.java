@@ -18,9 +18,11 @@ import javax.persistence.Query;
 import main.java.org.demo.bean.jpa.EventsEntity;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.bean.jpa.ParticipationsEntity;
+import main.java.org.demo.persistence.PersistenceServiceProvider;
+import main.java.org.demo.persistence.services.OrganizersPersistence;
+import main.java.org.demo.persistence.services.ParticipationsPersistence;
 import main.java.org.demo.persistence.services.jpa.EventsPersistenceJPA;
 import main.java.org.demo.persistence.services.jpa.OrganizersPersistenceJPA;
-import main.java.org.demo.persistence.services.jpa.ParticipationsPersistenceJPA;
 
 /**
  * @author morin
@@ -72,15 +74,15 @@ public class MainService implements ServicesInterface{
 				return false;
 			}else{
 				ParticipationsEntity participation =new ParticipationsEntity();
-				participation.setEmail(email);
 				participation.setEvents(events);
+				participation.setEmail(email);
 				participation.setNom(name);
 				participation.setPrenom(fname);
 				if (company != null){
 					participation.setSociete(company);
 				}
-				ParticipationsPersistenceJPA jpa = new ParticipationsPersistenceJPA();
-				jpa.insert(participation);
+				ParticipationsPersistence provider = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
+				provider.insert(participation);
 				return true;
 			}			
 		}
@@ -128,18 +130,18 @@ public class MainService implements ServicesInterface{
 		if (checkUserExist(uname) || pwd == null || matcher.matches()== false){
 			return null;
 		}else {
-			OrganizersEntity organizers = new OrganizersEntity();
-			organizers.setEmail(uname);
-			organizers.setPassword(pwd);
-			OrganizersPersistenceJPA jpa = new OrganizersPersistenceJPA();
-			jpa.insert(organizers);
+			OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
+			OrganizersEntity organizer = new OrganizersEntity();
+			organizer.setEmail(uname);
+			organizer.setPassword(pwd);
+			provider.insert(organizer);
 			
 			/*OrganizersEntity usr = new OrganizersEntity();
 			usr.setEmail(un);
 			usr.setPassword(pwd);
 			OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
 			provider.save(usr);*/
-			return organizers.getId();
+			return organizer.getId();
 		}
 	}
 
@@ -153,8 +155,8 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public List<EventsEntity> getUserEvents(int usernameId) {
-		OrganizersPersistenceJPA jpa = new OrganizersPersistenceJPA();
-		OrganizersEntity organizer= jpa.load(usernameId);
+		OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);		
+		OrganizersEntity organizer=  provider.load(usernameId);
 		List<EventsEntity> events = organizer.getListOfEvents();
 		return events;
 	}

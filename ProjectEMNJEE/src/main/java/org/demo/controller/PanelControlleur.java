@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,18 +16,18 @@ import main.java.org.demo.service.MainService;
 import main.java.org.demo.service.ServicesInterface;
 
 /**
- * Servlet implementation class IndexControlleur
+ * Servlet implementation class PanelControlleur
  */
-@WebServlet("/main")
-public class MainControlleur extends HttpServlet {
+@WebServlet("/panel")
+public class PanelControlleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public MainControlleur() {
-		super();
-	}
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public PanelControlleur() {
+        super();
+    }
 
 	/**
 	 * @see Servlet#init(ServletConfig)
@@ -42,10 +41,10 @@ public class MainControlleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServicesInterface serviceLayer = new MainService();
-		List<EventsEntity> publishedEventsList = serviceLayer.getPublicEventList();
+		List<EventsEntity> eventsList = serviceLayer.getUserEvents((Integer)request.getSession().getAttribute("uid"));
 		RequestDispatcher rd;
 		
-		request.setAttribute("eventsList", publishedEventsList);
+		request.setAttribute("eventsList", eventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		rd.forward(request, response);
 	}
@@ -54,6 +53,7 @@ public class MainControlleur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//NOTHING TO DO
+		// TODO Auto-generated method stub
 	}
+
 }

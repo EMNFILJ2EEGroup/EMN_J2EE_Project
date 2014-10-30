@@ -22,13 +22,13 @@ import main.java.org.demo.service.ServicesInterface;
 @WebServlet("/main/info")
 public class MainEventController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MainEventController() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MainEventController() {
+		super();
+	}
 
 	/**
 	 * @see Servlet#init(ServletConfig)
@@ -48,17 +48,26 @@ public class MainEventController extends HttpServlet {
 		RequestDispatcher rd;
 		int eventID;
 
-		request.setAttribute("eventsList", publishedEventsList);
-		if (serviceLayer.checkEventIdValidity(rawEventID)) {
+		if (serviceLayer.checkEventIdValidity(rawEventID)) { // Le paramètre est valide.
+			request.setAttribute("eventsList", publishedEventsList);
 			eventID = Integer.parseInt(rawEventID);
 			EventsEntity event = serviceLayer.getEvent(eventID);
-			request.setAttribute("focusedEvent", event);
+
+			if(event != null) { // L'event existe.
+				if (event.getPublication() == 0) { //S'il n'est pas public.
+					request.getSession().setAttribute("toast", "L'evenement "+eventID+" n'est pas public.");
+					response.sendRedirect(request.getContextPath() + "/main"); 
+					return;
+				} else 
+					request.setAttribute("focusedEvent", event);
+			} else {  // l'event n'existe pas.
+				forwardTo404(request, response); return;
+			}
 		}
 		else {
-			response.sendRedirect(request.getContextPath() + "/Error404.html");
-			request.getSession().removeAttribute("toast");
-			return;
+			forwardTo404(request, response); return;
 		}
+		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/mainEvent.jsp");
 		rd.forward(request, response);
 		request.getSession().removeAttribute("toast");
@@ -68,14 +77,15 @@ public class MainEventController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ServicesInterface serviceLayer = new MainService();
 		String email = request.getParameter("email");
 		String name = request.getParameter("name");
 		String fname = request.getParameter("fname");
 		String company = request.getParameter("company");
-		String rawEventID = request.getParameter("event");
+		String rawEventID = request.getParameter("relatedEvent");
 		int eventID;
-		
+
 		if (serviceLayer.checkEventIdValidity(rawEventID)) {
 			eventID = Integer.parseInt(rawEventID);
 			if(serviceLayer.checkEventSubscribe(eventID, email, name, fname, company)) {
@@ -86,8 +96,13 @@ public class MainEventController extends HttpServlet {
 			}
 			response.sendRedirect(request.getContextPath() + "/main/info?event=" + eventID);
 		} else {
-			response.sendRedirect(request.getContextPath() + "/Error404.html");
+			forwardTo404(request, response); return;
 		}
+	}
+
+	private void forwardTo404(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect(request.getContextPath() + "/Error404.html");
+		request.getSession().removeAttribute("toast");
 	}
 
 }
