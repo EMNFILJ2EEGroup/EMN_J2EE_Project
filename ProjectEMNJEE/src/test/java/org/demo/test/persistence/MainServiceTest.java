@@ -161,16 +161,22 @@ public class MainServiceTest {
 			assertFalse(mainService.checkUserExist("nexistepaslemail@enbase.fr"));
 		}
 		
-	//	@Test
-	//	public void testValidateSubscribe(){
-	//		
-	//	}
-	//	
-	//	@Test
-	//	public void testCheckValidSession(){
-	//		
-	//	}
-	//	
+		@Test
+		public void testValidateSubscribe(){
+			organizersEntity = new OrganizersEntity();
+			organizersEntity.setEmail("existeid@existeid.fr");
+			organizersEntity.setPassword("existeid");
+
+			assertNotNull(mainService.validateSubscribe("existeid@existeid.fr", "existeid"));
+			assertNull(mainService.validateSubscribe("existeid@existeid.fr", "existeid"));
+		}
+		
+		@Test
+		public void testCheckValidSession(){
+			assertFalse(mainService.checkValidSession(null));
+			assertTrue(mainService.checkValidSession("test"));
+		}
+		
 	//	@Test
 	//	public void testGetUserEvents(){
 	//		
