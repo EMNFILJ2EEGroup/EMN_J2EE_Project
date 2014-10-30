@@ -163,7 +163,6 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public boolean checkValidSession(String uid) {
-		System.out.println("uid="+uid);
 		if(uid != null) 
 			if(!uid.equalsIgnoreCase(""))
 				return true;
