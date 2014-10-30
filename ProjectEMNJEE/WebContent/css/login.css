@@ -30,3 +30,9 @@
 .formRow {
 	margin-bottom: 6px;
 }
+
+
+.connectButton {
+	margin-top: 6px;
+	float: right;
+}

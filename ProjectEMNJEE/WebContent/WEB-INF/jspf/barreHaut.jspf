@@ -2,20 +2,21 @@
 	<div class="container-fluid">
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="${baseURL}/creerEvent">Créer un évènement</a></li>
-				<li><a href="${baseURL}/listeEvent">Liste des évènements</a></li>
-			</ul>
+
 			<c:if test="${empty sessionScope.uid }">
-			<a href="${baseURL}/login">
-				<button type="button" class="btn btn-default">Connexion</button>
-			</a>
+				<a href="${baseURL}/login">
+					<button type="button" class="btn btn-default connectButton" >Connexion</button>
+				</a>
 			</c:if>
+			
 			<c:if test="${!empty sessionScope.uid }">
-			<a href="${baseURL}/logout">
-				<button type="button" class="btn btn-default">Déconnexion
-					${sessionScope.uname}</button>
-			</a>
+				<ul class="nav navbar-nav">
+					<li><a href="${baseURL}/panel">Page de gestion</a></li>
+				</ul>
+				<a href="${baseURL}/logout">
+					<button type="button" class="btn btn-default connectButton">Déconnexion
+						${sessionScope.uname}</button>
+				</a>
 			</c:if>
 		</div>
 		<!-- /.navbar-collapse -->

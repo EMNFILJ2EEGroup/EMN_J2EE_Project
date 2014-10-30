@@ -60,7 +60,7 @@ public class MainService implements ServicesInterface{
 	public EventsEntity getEvent(int id) {
 		EventsEntity event = new EventsPersistenceJPA().load(id);
 		return event;
-	}
+	}	
 	
 	@Override
 	public boolean checkEventSubscribe(int eventId, String email,String fname, String name, String company) {

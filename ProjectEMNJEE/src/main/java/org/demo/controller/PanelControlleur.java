@@ -44,7 +44,7 @@ public class PanelControlleur extends HttpServlet {
 		List<EventsEntity> eventsList = serviceLayer.getUserEvents((Integer)request.getSession().getAttribute("uid"));
 		RequestDispatcher rd;
 		
-		request.setAttribute("eventsList", eventsList);
+		request.setAttribute("myEventsList", eventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		rd.forward(request, response);
 	}

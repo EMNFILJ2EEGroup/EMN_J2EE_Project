@@ -22,13 +22,13 @@
 	</c:if>
 	<div class="container">
 		<div class="list-group">
-			<c:if test="${ ! empty requestScope.eventsList }">
-				<c:forEach var="event" items="${requestScope['eventsList']}">
+			<c:if test="${ ! empty requestScope.myEventsList }">
+				<c:forEach var="event" items="${requestScope['myEventsList']}">
 					<a href="${baseURL}/panel/info?event=${event.id}"
 						class="list-group-item"> ${event.name} </a>
 				</c:forEach>
 			</c:if>
-			<c:if test="${ empty requestScope.eventsList }">
+			<c:if test="${ empty requestScope.myEventsList }">
 				<p>Aucun évènements</p>
 			</c:if>
 		</div>
