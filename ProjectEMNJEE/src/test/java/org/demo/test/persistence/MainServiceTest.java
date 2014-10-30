@@ -26,27 +26,29 @@ import org.junit.After;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MainServiceTest {
 
 	private static final Integer publication = 1;
 	private static final Integer idNonExistant = 9999999;
-	private MainService mainService;
-	private EventsEntity eventsEntity;
-	private OrganizersEntity organizersEntity;
-	private ParticipationsEntity participationsEntity;
-	List<EventsEntity> listeEventsEntities = new ArrayList<EventsEntity>();
-	List<OrganizersEntity> listeOrganizersEntites = new ArrayList<OrganizersEntity>();
-	List<ParticipationsEntity> listeParticipationsEntities = new ArrayList<ParticipationsEntity>();
-	EventsPersistence eventsPersistence = PersistenceServiceProvider.getService(EventsPersistence.class);
-	ParticipationsPersistence participationsPersistence = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
-	OrganizersPersistence organizersPersistence = PersistenceServiceProvider.getService(OrganizersPersistence.class);
+	private static MainService mainService;
+	private static EventsEntity eventsEntity;
+	private static OrganizersEntity organizersEntity;
+	private static ParticipationsEntity participationsEntity;
+	private static List<EventsEntity> listeEventsEntities = new ArrayList<EventsEntity>();
+	private static List<OrganizersEntity> listeOrganizersEntites = new ArrayList<OrganizersEntity>();
+	private static List<ParticipationsEntity> listeParticipationsEntities = new ArrayList<ParticipationsEntity>();
+	private static EventsPersistence eventsPersistence = PersistenceServiceProvider.getService(EventsPersistence.class);
+	private static ParticipationsPersistence participationsPersistence = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
+	private static OrganizersPersistence organizersPersistence = PersistenceServiceProvider.getService(OrganizersPersistence.class);
 
 
-	@Before
-	public void setUp(){
+	@BeforeClass
+	public static void setUp(){
 		mainService = new MainService();
 
 		// Insertion des utilisateurs/organisateurs
@@ -195,14 +197,19 @@ public class MainServiceTest {
 		}
 	}
 
-	@After
-	public void tearDown(){
+	@AfterClass
+	public static void tearDown(){
 		// On supprime toutes les données de la base
-		participationsPersistence.delete(participationsEntity.getId()-1);
-		participationsPersistence.delete(participationsEntity.getId());
-		eventsPersistence.delete(eventsEntity.getId()-1);
-		eventsPersistence.delete(eventsEntity.getId());
-		organizersPersistence.delete(organizersEntity.getId()-1);
-		organizersPersistence.delete(organizersEntity.getId());
+		Integer idPE = participationsEntity.getId();
+		Integer idEE = eventsEntity.getId();
+		Integer idOE = organizersEntity.getId();
+		participationsPersistence.delete(idPE);
+		participationsPersistence.delete(idPE-1);
+		participationsPersistence.delete(idPE+1);
+		eventsPersistence.delete(idEE);
+		eventsPersistence.delete(idEE-1);
+		organizersPersistence.delete(idOE);
+		organizersPersistence.delete(idOE-1);
+		organizersPersistence.delete(idOE+1);
 	}
 }
