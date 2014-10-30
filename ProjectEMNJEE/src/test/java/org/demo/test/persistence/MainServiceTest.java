@@ -304,7 +304,8 @@ public class MainServiceTest {
 		
 		@Test
 		public void testPublishEvent(){
-			
+			mainService.publishEvent(eventsEntity.getId());
+			assertEquals(publication, eventsEntity.getPublication());
 		}
 
 
