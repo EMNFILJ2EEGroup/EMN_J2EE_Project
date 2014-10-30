@@ -51,7 +51,7 @@ public class MainServiceTest {
 	public static void setUp(){
 		mainService = new MainService();
 
-		// Insertion des utilisateurs/organisateurs
+		// Insertion des utilisateurs/organisateurs pour les tests
 		organizersEntity = new OrganizersEntity();
 		organizersEntity.setEmail("organizer1@organizer1.fr");
 		organizersEntity.setPassword("organizer1");
@@ -64,7 +64,7 @@ public class MainServiceTest {
 		organizersPersistence.insert(organizersEntity);
 		listeOrganizersEntites.add(organizersEntity);
 
-		// Insertion des évènements		
+		// Insertion des évènements	pour les tests
 		eventsEntity = new EventsEntity();
 		eventsEntity.setName("event1");
 		eventsEntity.setAdresse("toto");
@@ -89,7 +89,7 @@ public class MainServiceTest {
 		eventsPersistence.insert(eventsEntity);
 		listeEventsEntities.add(eventsEntity);
 
-		// Insertion des participants
+		// Insertion des participants pour les tests
 		participationsEntity = new ParticipationsEntity();
 		participationsEntity.setEmail("participant1@participation1.fr");
 		participationsEntity.setNom("nomPart1");
@@ -199,7 +199,7 @@ public class MainServiceTest {
 
 	@AfterClass
 	public static void tearDown(){
-		// On supprime toutes les données de la base
+		// On supprime toutes les données de la base comme si on n'avait pas fait de tests
 		Integer idPE = participationsEntity.getId();
 		Integer idEE = eventsEntity.getId();
 		Integer idOE = organizersEntity.getId();
