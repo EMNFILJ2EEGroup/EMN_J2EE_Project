@@ -3,6 +3,7 @@ package main.java.org.demo.service;
 import java.util.List;
 
 import main.java.org.demo.bean.jpa.EventsEntity;
+import main.java.org.demo.bean.jpa.ParticipationsEntity;
 
 public interface ServicesInterface {
 
@@ -115,5 +116,11 @@ public interface ServicesInterface {
 	 * @param eventId - The event Id
 	 */
 	public void publishEvent(int eventId);
+
+	
+	
+	public  List<ParticipationsEntity> getParticipationList(int eventId);
+	public boolean validateUpdateEvent(int eventId,  String name, String addr,
+			String beginDate, String endDate, String beginHour, String endHour, int published);
 	
 }

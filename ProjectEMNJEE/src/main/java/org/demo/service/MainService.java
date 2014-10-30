@@ -237,5 +237,53 @@ public class MainService implements ServicesInterface{
 		event.setPublication(1);
 	}
 
+	@Override
+	public  List<ParticipationsEntity> getParticipationList(int eventId) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit1");
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("ParticipationsEntity.getAllByEventId");
+		q.setParameter("uid", eventId);
+		@SuppressWarnings("unchecked")
+		List<ParticipationsEntity> results = q.getResultList ();
+		return results;
+	}
+	
+	@Override
+	public boolean validateUpdateEvent(int eventId, String name, String addr,
+			String beginDate, String endDate, String beginHour, String endHour, int published) {
+		if (name == null || addr == null || beginDate == null || endDate == null|| beginHour == null || endHour == null)
+			return false;
+		
+		EventsPersistence eventProvider = PersistenceServiceProvider.getService(EventsPersistence.class);
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfHeure = new SimpleDateFormat("HH:mm");
+		EventsEntity event = new EventsPersistenceJPA().load(eventId);
+		
+		if(event == null) return false;
+		try {
+			event.setName(name);
+			event.setAdresse(addr);
+			
+			Date begDateSDF;
+			Date endDateSDF;
+			Date begHourSDF;
+			Date endHourSDF;
+			begDateSDF = (sdfDate.parse(beginDate));
+			endDateSDF = (sdfDate.parse(endDate));
+			begHourSDF = (sdfHeure.parse(beginHour));
+			endHourSDF = (sdfHeure.parse(endHour));
+			event.setDateDebut(begDateSDF);
+			event.setDateFin(endDateSDF);
+			event.setHeureDebut(begHourSDF);
+			event.setHeureFin(endHourSDF);
+			event.setPublication(published);
+			if (begDateSDF.after(endDateSDF) || (begDateSDF.compareTo(endDateSDF)==0 && begHourSDF.after(endHourSDF))) 
+				return false;
+			eventProvider.save(event);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 	
 }

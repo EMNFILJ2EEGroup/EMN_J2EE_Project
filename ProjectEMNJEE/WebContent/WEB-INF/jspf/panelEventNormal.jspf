@@ -1,0 +1,61 @@
+<form id="creerEvent_frm"
+	action="${baseURL}/panel/info?event=${ requestScope.focusedEvent.id }"
+	method="post" class="jumbotron" role="form">
+	<div class="container">
+
+		<div class="row">
+			<center>
+				<h3>Fiche de l'évènement</h3>
+			</center>
+		</div>
+
+		<div class="form-group input-group">
+			<span class="input-group-addon">Nom</span> <input type="text"
+				class="form-control" name="nomEvent" id="nomEventId"
+				value="${ requestScope.focusedEvent.name }">
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Adresse</span> <input type="text"
+				class="form-control" name="adresseEvent" id="adresseEventId"
+				value="${ requestScope.focusedEvent.adresse }">
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Date début</span> <input type="date"
+				name="dateDebut" id="dateDebutId"
+				value="${ requestScope.focusedEvent.dateDebut }">
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Heure début</span> <input type="time"
+				name="heureDebut" id="heureDebutId"
+				value="${ requestScope.focusedEvent.heureDebut }">
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Date fin</span> <input type="date"
+				name="dateFin" id="dateFinId"
+				value="${ requestScope.focusedEvent.dateFin }">
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Heure fin</span> <input type="time"
+				name="heureFin" id="heureFinId"
+				value="${ requestScope.focusedEvent.heureFin }">
+		</div>
+		<div class="form-group input-group">
+			<input type="hidden"
+				name="relatedEvent" id="relatedEventId"
+				value="${ requestScope.focusedEvent.id }">
+		</div>
+
+		<div class="row formRow">
+			<div class="col-xs-12">
+				<input type="submit" id="savePublish" name="button"
+					class="frm_btns btn btn-primary" value="Enregistrer et publier" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-3">
+				<input type="submit" id="savePublish" name="button"
+					class="frm_btns btn btn-success" value="Enregistrer" />
+			</div>
+		</div>
+	</div>
+</form>

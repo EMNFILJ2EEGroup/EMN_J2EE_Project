@@ -1,0 +1,44 @@
+<form id="creerEvent_frm"
+	action="${baseURL}/panel/info?event=${ requestScope.focusedEvent.id }"
+	method="get" class="jumbotron" role="form">
+	<div class="container">
+
+		<div class="row">
+			<center>
+				<h3>Fiche de l'évènement</h3>
+			</center>
+		</div>
+
+		<div class="form-group input-group">
+			<span class="input-group-addon">Nom</span> <input type="text"
+				class="form-control" name="nomEvent" id="nomEventId"
+				value="${ requestScope.focusedEvent.name }" disabled>
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Adresse</span> <input type="text"
+				class="form-control" name="adresseEvent" id="adresseEventId"
+				value="${ requestScope.focusedEvent.adresse }" disabled>
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Date début</span> <input type="date"
+				name="dateDebut" id="dateDebutId"
+				value="${ requestScope.focusedEvent.dateDebut }" disabled>
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Heure début</span> <input type="time"
+				name="heureDebut" id="heureDebutId"
+				value="${ requestScope.focusedEvent.heureDebut }" disabled>
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Date fin</span> <input type="date"
+				name="dateFin" id="dateFinId"
+				value="${ requestScope.focusedEvent.dateFin }" disabled>
+		</div>
+		<div class="form-group input-group">
+			<span class="input-group-addon">Heure fin</span> <input type="time"
+				name="heureFin" id="heureFinId"
+				value="${ requestScope.focusedEvent.heureFin }" disabled>
+		</div>
+
+	</div>
+</form>

@@ -12,6 +12,7 @@ import java.io.Serializable;
 //import org.hibernate.validator.constraints.* ;
 
 
+
 import javax.persistence.*;
 
 /**
@@ -25,7 +26,8 @@ import javax.persistence.*;
 @Table(name="PARTICIPATIONS", schema="APP" )
 // Define named queries here
 @NamedQueries ( {
-  @NamedQuery ( name="ParticipationsEntity.countAll", query="SELECT COUNT(x) FROM ParticipationsEntity x" )
+  @NamedQuery ( name="ParticipationsEntity.countAll", query="SELECT COUNT(x) FROM ParticipationsEntity x" ),
+  @NamedQuery ( name="ParticipationsEntity.getAllByEventId", query="SELECT p FROM ParticipationsEntity p where p.events.id = :uid")
 } )
 public class ParticipationsEntity implements Serializable {
 

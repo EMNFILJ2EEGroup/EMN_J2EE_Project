@@ -72,13 +72,13 @@
 			<div class="row formRow">
 				<div class="col-xs-12">
 					<input type="submit" id="creerPublier" name="button"
-						class="frm_btns btn btn-primary" value="both" />
+						class="frm_btns btn btn-primary" value="Créer et publier" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-6 col-xs-offset-3">
 					<input type="submit" id="creer" name="button"
-						class="frm_btns btn btn-success" value="create" />
+						class="frm_btns btn btn-success" value="Créer" />
 				</div>
 			</div>
 		</div>

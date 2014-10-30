@@ -67,14 +67,7 @@ public class PanelNewControlleur extends HttpServlet {
 		int published = 0;
 		Integer uid = (Integer)request.getSession().getAttribute("uid");
 		
-		if(btn.equals("both")) published = 1;
-		System.out.println(nom);
-		System.out.println(addr);
-		System.out.println(begD);
-		System.out.println(begH);
-		System.out.println(endD);
-		System.out.println(endH);
-		System.out.println(published);
+		if(btn.equalsIgnoreCase("Créer et publier")) published = 1;
 		
 		boolean result = serviceLayer.validateNewEvent(uid, nom, addr, begD, endD, begH, endH, published);
 		if(result) {
