@@ -15,6 +15,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.hibernate.Hibernate;
+
 import main.java.org.demo.bean.jpa.EventsEntity;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.bean.jpa.ParticipationsEntity;
@@ -157,6 +159,7 @@ public class MainService implements ServicesInterface{
 	public List<EventsEntity> getUserEvents(int usernameId) {
 		OrganizersPersistence provider = PersistenceServiceProvider.getService(OrganizersPersistence.class);		
 		OrganizersEntity organizer=  provider.load(usernameId);
+		//Hibernate.initialize(organizer);
 		List<EventsEntity> events = organizer.getListOfEvents();
 		return events;
 	}
