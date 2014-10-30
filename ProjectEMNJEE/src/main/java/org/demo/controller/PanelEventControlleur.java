@@ -61,7 +61,7 @@ public class PanelEventControlleur extends HttpServlet {
 					request.setAttribute("eventParticipants", participants);
 					request.setAttribute("focusedEvent", event);
 				} else {
-					request.getSession().setAttribute("toast", "Tentative d'accès à un évènement dont vous n'êtes pas le propriétaire...");
+					request.getSession().setAttribute("toastDanger", "Tentative d'accès à un évènement dont vous n'êtes pas le propriétaire...");
 					response.sendRedirect(request.getContextPath() + "/panel"); 
 					return;
 				}
@@ -73,7 +73,9 @@ public class PanelEventControlleur extends HttpServlet {
 		}
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/panelEvent.jsp");
 		rd.forward(request, response);
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastSuccess");
+		request.getSession().removeAttribute("toastWarning");
+		request.getSession().removeAttribute("toastDanger");;
 	}
 
 	/**
@@ -81,7 +83,6 @@ public class PanelEventControlleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServicesInterface serviceLayer = new MainService();
-		request.getSession().removeAttribute("toast");
 		
 		String nom = request.getParameter("nomEvent");
 		String addr = request.getParameter("adresseEvent");
@@ -100,14 +101,14 @@ public class PanelEventControlleur extends HttpServlet {
 			if(serviceLayer.isOwner(Integer.parseInt(eventId), uid)) {
 				boolean result = serviceLayer.validateUpdateEvent(Integer.parseInt(eventId),  nom, addr, begD, endD, begH, endH, published);
 				if(result) {
-					request.getSession().setAttribute("toast", "Votre évènement a bien été mis à jour !");
+					request.getSession().setAttribute("toastSuccess", "Votre évènement a bien été mis à jour !");
 					response.sendRedirect(request.getContextPath() + "/panel/info?event="+ eventId);
 				} else {
-					request.getSession().setAttribute("toast", "Votre évènement n'a pas été mis à jour, vérifiez votre saisie...");
+					request.getSession().setAttribute("toastWarning", "Votre évènement n'a pas été mis à jour, vérifiez votre saisie...");
 					response.sendRedirect(request.getContextPath() + "/panel/info?event=" + eventId);
 				}
 			} else {
-				request.getSession().setAttribute("toast", "Tentative d'accès à un évènement dont vous n'êtes pas le propriétaire...");
+				request.getSession().setAttribute("toastDanger", "Tentative d'accès à un évènement dont vous n'êtes pas le propriétaire...");
 				response.sendRedirect(request.getContextPath() + "/panel");
 			}
 		} else {
@@ -120,7 +121,9 @@ public class PanelEventControlleur extends HttpServlet {
 
 	private void forwardTo404(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendRedirect(request.getContextPath() + "/Error404.html");
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastSuccess");
+		request.getSession().removeAttribute("toastWarning");
+		request.getSession().removeAttribute("toastDanger");
 	}
 	
 }

@@ -47,7 +47,7 @@ public class PanelNewControlleur extends HttpServlet {
 		request.setAttribute("myEventsList", myeventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/panelNew.jsp");
 		rd.forward(request, response);
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastDanger");
 	}
 
 	/**
@@ -55,7 +55,6 @@ public class PanelNewControlleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServicesInterface serviceLayer = new MainService();
-		request.getSession().removeAttribute("toast");
 		
 		String nom = request.getParameter("nomEvent");
 		String addr = request.getParameter("adresseEvent");
@@ -71,10 +70,10 @@ public class PanelNewControlleur extends HttpServlet {
 		
 		boolean result = serviceLayer.validateNewEvent(uid, nom, addr, begD, endD, begH, endH, published);
 		if(result) {
-			request.getSession().setAttribute("toast", "Votre évènement a bien été crée !");
+			request.getSession().setAttribute("toastSuccess", "Votre évènement a bien été crée !");
 			response.sendRedirect(request.getContextPath() + "/panel");
 		} else {
-			request.getSession().setAttribute("toast", "Votre évènement n'a pas été crée, certains champs sont incorrectes...");
+			request.getSession().setAttribute("toastDanger", "Votre évènement n'a pas été crée, certains champs sont incorrectes...");
 			response.sendRedirect(request.getContextPath() + "/panel/new");
 		}
 		

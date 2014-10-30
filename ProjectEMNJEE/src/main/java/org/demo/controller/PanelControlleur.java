@@ -47,7 +47,8 @@ public class PanelControlleur extends HttpServlet {
 		request.setAttribute("myEventsList", myeventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/panel.jsp");
 		rd.forward(request, response);
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastDanger");
+		request.getSession().removeAttribute("toastSuccess");
 	}
 
 	/**

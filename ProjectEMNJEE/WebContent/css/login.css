@@ -19,18 +19,17 @@
 }
 
 #msgbox {
-	margin-bottom : 10px;
-	padding : 5px;
+	margin-bottom: 10px;
+	padding: 5px;
 }
 
 .frm_btns {
-	width : 100%;
+	width: 100%;
 }
 
 .formRow {
 	margin-bottom: 6px;
 }
-
 
 .connectButton {
 	margin-top: 8px;
@@ -41,4 +40,11 @@
 	margin-top: 8px;
 	margin-right: 10px;
 	float: left;
+}
+
+#gotoMain {
+	position: absolute;
+	padding: 15px;
+	margin-left: 39%;
+	margin-top: -15%;
 }

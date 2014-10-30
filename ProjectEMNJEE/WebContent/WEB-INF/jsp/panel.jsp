@@ -17,9 +17,7 @@
 	<center><h1>Page de gestion</h1></center> <br/>
 	
 	<h1>Liste de mes évènements</h1>
-	<c:if test="${ ! empty sessionScope.toast }">
-		<div id="msgbox" class="alert alert-warning" role="alert">${sessionScope.toast}</div>
-	</c:if>
+	<%@ include file="../jspf/toast.jspf"%>
 	<div class="container">
 		<div class="list-group">
 			<c:if test="${ ! empty requestScope.myEventsList }">

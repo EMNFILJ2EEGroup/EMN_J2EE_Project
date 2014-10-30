@@ -1,21 +1,23 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse" role="navigation">
 	<div class="container-fluid">
+
+		<div class="navbar-header">
+			<a class="navbar-brand" href="${baseURL}/main"> <span
+				class="glyphicon glyphicon-home"></span>
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
-
-		
-			<a href="${baseURL}/panel/new">
-				<button type="button" class="btn btn-success createButton">+
-				</button>
-			</a>
 			<ul class="nav navbar-nav">
-				<li><a href="${baseURL}/panel">Page de gestion</a></li>
-				<li><a href="${baseURL}/main">Page principale</a></li>
+				<li><a href="${baseURL}/panel">Tableau de bord</a></li>
+				<li><a href="${baseURL}/panel/new"> Créer un évènement </a></li>
 			</ul>
-			<a href="${baseURL}/logout">
-				<button type="button" class="btn btn-default connectButton">Déconnexion
-					${sessionScope.uname}</button>
-			</a>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="${baseURL}/logout"> Déconnexion
+						${sessionScope.uname} </a></li>
+			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>

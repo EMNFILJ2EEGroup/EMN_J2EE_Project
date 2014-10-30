@@ -25,7 +25,9 @@ import javax.servlet.http.HttpSession;
 				value= "/login,/Error404.html,/main,/main/info"),
 				@WebInitParam(name="auth-free-patterns", 
 				value= ".*(\\.css)$,"+
-						".*(\\.js)$")}) 
+						".*(\\.js)$,"+ 
+						".*(\\.woff)$," + 
+						".*(\\.ttf)$")}) 
 public class SessionFilter implements Filter {
 
 	private ArrayList<String> urlList;	

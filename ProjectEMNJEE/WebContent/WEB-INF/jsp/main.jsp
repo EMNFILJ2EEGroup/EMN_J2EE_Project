@@ -8,27 +8,36 @@
 <link rel="stylesheet" type="text/css"
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${baseURL}/css/blocs.css">
 <title>Page principale</title>
 </head>
 
 
 <body>
 	<%@ include file="../jspf/barreHaut.jspf"%>
-	<h1>Liste des events publiés</h1>
-	<c:if test="${ ! empty sessionScope.toast }">
-		<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toast}</div>
-	</c:if>
 	<div class="container">
-		<div class="list-group">
-			<c:if test="${ ! empty requestScope.eventsList }">
-				<c:forEach var="event" items="${requestScope['eventsList']}">
-					<a href="${baseURL}/main/info?event=${event.id}"
-						class="list-group-item"> ${event.name} </a>
-				</c:forEach>
-			</c:if>
-			<c:if test="${ empty requestScope.eventsList }">
-				<p>Aucun evenements publiés</p>
-			</c:if>
+		<div class="row">
+			<div class="col-xs-3" id="leftBloc">
+				<center><h2>Evènements publiés</h2></center>
+				<div class="list-group">
+					<c:if test="${ ! empty requestScope.eventsList }">
+						<c:forEach var="event" items="${requestScope['eventsList']}">
+							<a href="${baseURL}/main/info?event=${event.id}"
+								class="list-group-item"> ${event.name} </a>
+						</c:forEach>
+					</c:if>
+					<c:if test="${ empty requestScope.eventsList }">
+						<p>Auccun évènements publiés</p>
+					</c:if>
+				</div>
+			</div>
+
+			<div class="col-xs-9" id="mainBloc">
+
+				
+				<%@ include file="../jspf/toast.jspf"%>
+			</div>
+
 		</div>
 	</div>
 </body>

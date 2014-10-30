@@ -55,7 +55,7 @@ public class MainEventController extends HttpServlet {
 
 			if(event != null) { // L'event existe.
 				if (event.getPublication() == 0) { //S'il n'est pas public.
-					request.getSession().setAttribute("toast", "L'evenement "+eventID+" n'est pas public.");
+					request.getSession().setAttribute("toastDanger", "L'evenement "+eventID+" n'est pas public.");
 					response.sendRedirect(request.getContextPath() + "/main"); 
 					return;
 				} else 
@@ -70,7 +70,8 @@ public class MainEventController extends HttpServlet {
 		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/mainEvent.jsp");
 		rd.forward(request, response);
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastDanger");
+		request.getSession().removeAttribute("toastSuccess");
 	}
 
 	/**
@@ -89,10 +90,10 @@ public class MainEventController extends HttpServlet {
 		if (serviceLayer.checkEventIdValidity(rawEventID)) {
 			eventID = Integer.parseInt(rawEventID);
 			if(serviceLayer.checkEventSubscribe(eventID, email, name, fname, company)) {
-				request.getSession().setAttribute("toast", "Vous avez correctement été ajouté à la liste des invités de l'évenement.");
+				request.getSession().setAttribute("toastSuccess", "Vous avez correctement été ajouté à la liste des invités de l'évenement.");
 			}
 			else {
-				request.getSession().setAttribute("toast", "Les informations saisis ne sont pas correctes.");
+				request.getSession().setAttribute("toastDanger", "Les informations saisis ne sont pas correctes.");
 			}
 			response.sendRedirect(request.getContextPath() + "/main/info?event=" + eventID);
 		} else {
@@ -102,7 +103,8 @@ public class MainEventController extends HttpServlet {
 
 	private void forwardTo404(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendRedirect(request.getContextPath() + "/Error404.html");
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastDanger");
+		request.getSession().removeAttribute("toastSuccess");
 	}
 
 }

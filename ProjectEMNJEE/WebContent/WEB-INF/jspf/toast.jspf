@@ -1,0 +1,15 @@
+<c:if test="${ ! empty sessionScope.toastSuccess }">
+	<div id="msgbox" class="alert alert-success" role="alert">${sessionScope.toastSuccess}</div>
+</c:if>
+<c:if test="${ ! empty sessionScope.toastInfo }">
+	<div id="msgbox" class="alert alert-info" role="alert">${sessionScope.toastInfo}</div>
+</c:if>
+<c:if test="${ ! empty sessionScope.toastWarning }">
+	<div id="msgbox" class="alert alert-warning" role="alert">${sessionScope.toastWarning}</div>
+</c:if>
+<c:if test="${ ! empty sessionScope.toastDanger }">
+	<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toastDanger}</div>
+</c:if>
+<c:if test="${ ! empty sessionScope.toast }">
+	<div id="msgbox" class="alert alert-info" role="alert">${sessionScope.toast}</div>
+</c:if>

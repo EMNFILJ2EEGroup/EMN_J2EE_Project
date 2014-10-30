@@ -50,7 +50,7 @@ public class LoginControlleur extends HttpServlet {
 
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		rd.forward(request, response);
-		request.getSession().removeAttribute("toast");
+		request.getSession().removeAttribute("toastDanger");
 	}
 
 	/**
@@ -72,14 +72,14 @@ public class LoginControlleur extends HttpServlet {
 
 		if(btn.equals("Subscribe")) 
 		{
-			request.getSession().removeAttribute("toast");
+			request.getSession().removeAttribute("toastDanger");
 			uid = serviceLayer.validateSubscribe(un, pwd);
 			if(uid != null) {
 				request.getSession().setAttribute("uid", uid);
 				request.getSession().setAttribute("uname", un);
 				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
-				request.getSession().setAttribute("toast", "Nom d'utilisateur déjà existant");
+				request.getSession().setAttribute("toastDanger", "Nom d'utilisateur déjà existant");
 				response.sendRedirect(request.getContextPath() + "/login");
 			}
 		} 
@@ -92,7 +92,7 @@ public class LoginControlleur extends HttpServlet {
 				request.getSession().setAttribute("uname", un);
 				response.sendRedirect(request.getContextPath() + "/main");
 			} else {
-				request.getSession().setAttribute("toast", "Nom d'utilisateur ou mot de passe invalides");
+				request.getSession().setAttribute("toastDanger", "Nom d'utilisateur ou mot de passe invalides");
 				response.sendRedirect(request.getContextPath() + "/login");
 			}
 		}

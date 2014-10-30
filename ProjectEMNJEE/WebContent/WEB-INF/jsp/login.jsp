@@ -3,7 +3,8 @@
 <html>
 
 <%@ include file="../jspf/commonHeader.jspf"%>
-<script type="text/javascript" src="${baseURL}/lib/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript"
+	src="${baseURL}/lib/js/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
@@ -12,6 +13,10 @@
 
 
 <body>
+
+	<%@ include file="../jspf/barreHaut.jspf"%>
+
+	
 	<form id="login_frm" action="${baseURL}/login" method="post"
 		class="jumbotron" role="form">
 
@@ -20,16 +25,14 @@
 		<div class="form-group input-group">
 			<span class="input-group-addon">@</span> <input type="email"
 				class="form-control" name="username" id="login_id"
-				placeholder="admin@a">
+				placeholder="user@emn.fr">
 		</div>
 
 		<div class="form-group input-group">
 			<span class="input-group-addon">>></span> <input type="password"
 				class="form-control" name="passwd" id="login_pwd" placeholder="test">
 		</div>
-		<c:if test="${ ! empty sessionScope.toast }">
-			<div id="msgbox" class="alert alert-danger" role="alert">${sessionScope.toast}</div>
-		</c:if>
+		<%@ include file="../jspf/toast.jspf"%>
 		<div class="container">
 			<div class="row formRow">
 				<div class="col-xs-12">
