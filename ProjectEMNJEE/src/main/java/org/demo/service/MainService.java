@@ -63,33 +63,45 @@ public class MainService implements ServicesInterface{
 		EventsEntity event = new EventsPersistenceJPA().load(id);
 		return event;
 	}	
-	
+
 	@Override
 	public boolean checkEventSubscribe(int eventId, String email,String fname, String name, String company) {
-
-		EventsEntity events = this.getEvent(eventId);
-		if (events == null ){
-			return false;
-		}else {
-			//Vérification du mail
-			Pattern patern = Pattern.compile("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$");
-			Matcher matcher = patern.matcher(email);
-			if (fname == null || name == null || matcher.matches()== false){
+		try{
+			EventsEntity events = this.getEvent(eventId);
+			if (events == null ){
 				return false;
-			}else{
-				ParticipationsEntity participation =new ParticipationsEntity();
-				participation.setEvents(events);
-				participation.setEmail(email);
-				participation.setNom(name);
-				participation.setPrenom(fname);
-				if (company != null){
-					participation.setSociete(company);
-				}
-				ParticipationsPersistence provider = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
-				provider.insert(participation);
-				return true;
-			}			
-		}
+			}else {
+				//Vérification du mail
+				Pattern patern = Pattern.compile("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$");
+				Matcher matcher = patern.matcher(email);
+				if (fname == null || name == null || matcher.matches()== false){
+					return false;
+				}else{
+					List<ParticipationsEntity> listeParticipants = getParticipationList(eventId);
+					boolean alreadyUsed = false;
+					for(ParticipationsEntity participant : listeParticipants) {
+						alreadyUsed = alreadyUsed || participant.getEmail().equalsIgnoreCase(email);
+						if(alreadyUsed) break;
+					}
+					if(alreadyUsed) { //Si une inscription a déjà été faite avec ce mail.
+							return false;
+					} else {
+						ParticipationsEntity participation =new ParticipationsEntity();
+						participation.setEvents(events);
+						participation.setEmail(email);
+						participation.setNom(name);
+						participation.setPrenom(fname);
+						if (company != null){
+							participation.setSociete(company);
+						}
+						ParticipationsPersistence provider = PersistenceServiceProvider.getService(ParticipationsPersistence.class);
+						provider.insert(participation);
+						return true;
+					}
+					
+				}			
+			}
+		} catch (Exception e) {return false;}
 	}
 
 	@Override
@@ -126,7 +138,7 @@ public class MainService implements ServicesInterface{
 		if(res.isEmpty()) return false;
 		else return true;
 	}
-	
+
 	@Override
 	public Integer validateSubscribe(String uname, String pwd) {
 		Pattern patern = Pattern.compile("(^[_a-z0-9-]+(\\.[_a-z0-9-]+)*)@([a-z0-9-]+)(\\.[a-z0-9-]+)+$");
@@ -139,7 +151,7 @@ public class MainService implements ServicesInterface{
 			organizer.setEmail(uname);
 			organizer.setPassword(pwd);
 			provider.insert(organizer);
-			
+
 			/*OrganizersEntity usr = new OrganizersEntity();
 			usr.setEmail(un);
 			usr.setPassword(pwd);
@@ -180,19 +192,19 @@ public class MainService implements ServicesInterface{
 			String beginDate, String endDate, String beginHour, String endHour, int published) {
 		if (name == null || addr == null || beginDate == null || endDate == null|| beginHour == null || endHour == null)
 			return false;
-		
+
 		EventsPersistence eventProvider = PersistenceServiceProvider.getService(EventsPersistence.class);
 		OrganizersPersistence userProvider = PersistenceServiceProvider.getService(OrganizersPersistence.class);
-		
+
 		EventsEntity event = new EventsEntity();
 		event.setName(name);
 		event.setAdresse(addr);
-		
+
 		OrganizersEntity user = userProvider.load(userId);
 		if (user == null)
 			return false;
 		event.setOrganizers(user);
-		
+
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdfHeure = new SimpleDateFormat("HH:mm");
 		Date begDateSDF;
@@ -213,7 +225,7 @@ public class MainService implements ServicesInterface{
 		event.setHeureDebut(begHourSDF);
 		event.setHeureFin(endHourSDF);
 		event.setPublication(published);
-		
+
 		eventProvider.insert(event);
 		return true;
 	}
@@ -247,23 +259,23 @@ public class MainService implements ServicesInterface{
 		List<ParticipationsEntity> results = q.getResultList ();
 		return results;
 	}
-	
+
 	@Override
 	public boolean validateUpdateEvent(int eventId, String name, String addr,
 			String beginDate, String endDate, String beginHour, String endHour, int published) {
 		if (name == null || addr == null || beginDate == null || endDate == null|| beginHour == null || endHour == null)
 			return false;
-		
+
 		EventsPersistence eventProvider = PersistenceServiceProvider.getService(EventsPersistence.class);
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdfHeure = new SimpleDateFormat("HH:mm");
 		EventsEntity event = new EventsPersistenceJPA().load(eventId);
-		
+
 		if(event == null) return false;
 		try {
 			event.setName(name);
 			event.setAdresse(addr);
-			
+
 			Date begDateSDF;
 			Date endDateSDF;
 			Date begHourSDF;
@@ -285,5 +297,5 @@ public class MainService implements ServicesInterface{
 		}
 		return true;
 	}
-	
+
 }
