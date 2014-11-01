@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet Filter implementation class SessionFilter 
  */
@@ -29,6 +31,8 @@ import javax.servlet.http.HttpSession;
 						".*(\\.woff)$," + 
 						".*(\\.ttf)$")}) 
 public class SessionFilter implements Filter {
+	
+	private static Logger logger = Logger.getLogger(SessionFilter.class);
 
 	private ArrayList<String> urlList;	
 	private ArrayList<String> patternList;
@@ -54,7 +58,7 @@ public class SessionFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String url = req.getServletPath();
-		System.out.println("--filter ->"+url);
+		logger.info("--filter ->"+url);
 		boolean allowedRequest;
 		boolean redirect = false;
 

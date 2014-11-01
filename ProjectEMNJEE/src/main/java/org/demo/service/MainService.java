@@ -163,7 +163,6 @@ public class MainService implements ServicesInterface{
 
 	@Override
 	public boolean checkValidSession(String uid) {
-		System.out.println("uid="+uid);
 		if(uid != null) 
 			if(!uid.equalsIgnoreCase(""))
 				return true;
@@ -231,22 +230,9 @@ public class MainService implements ServicesInterface{
 	}
 
 	@Override
-	public boolean removeEvent(int eventId, int userId) {
-		EventsEntity event=this.getEvent(eventId);
-		EventsPersistenceJPA jpa = new EventsPersistenceJPA();
-		return jpa.delete(event);
-	}
-
-	@Override
 	public boolean isOwner(int eventId, int userId) {
 		EventsEntity event=this.getEvent(eventId);		
 		return (event.getOrganizers().getId()==userId);
-	}
-
-	@Override
-	public void publishEvent(int eventId) {
-		EventsEntity event=this.getEvent(eventId);	
-		event.setPublication(1);
 	}
 
 	@Override

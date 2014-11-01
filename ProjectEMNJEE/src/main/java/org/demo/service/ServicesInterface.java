@@ -78,8 +78,6 @@ public interface ServicesInterface {
 	 */
 	public List<EventsEntity> getUserEvents(int usernameId);
 	
-	//TODO validateNewEvent, removeEvent, isOwner, publishEvent.
-	
 	/**
 	 * Check if all the params are correct and if so, the new event is created and stored in DB
 	 * @param userId - The Id of the user who created the event
@@ -94,30 +92,12 @@ public interface ServicesInterface {
 			String beginDate, String endDate, String beginHour, String endHour, int published);		;
 	
 	/**
-	 * Check if the userId is correct, the eventId too and if the user is the owner of the event.
-	 * If so, the event is removed in the database
-	 * @param eventId - The event Id
-	 * @param userId - The user Id
-	 * @return True if the event was correctly removed from database
-	 */
-	public boolean removeEvent(int eventId, int userId);
-	
-	
-	/**
 	 * Check if the user is the owner of the event.
 	 * @param eventId - The event Id
 	 * @param userId - The user Id
 	 * @return True if the user is the owner of the event.
 	 */
-	public boolean isOwner(int eventId, int userId);
-	
-	/**
-	 * Set the published tag of an event to true
-	 * @param eventId - The event Id
-	 */
-	public void publishEvent(int eventId);
-
-	
+	public boolean isOwner(int eventId, int userId);	
 	
 	public  List<ParticipationsEntity> getParticipationList(int eventId);
 	public boolean validateUpdateEvent(int eventId,  String name, String addr,
