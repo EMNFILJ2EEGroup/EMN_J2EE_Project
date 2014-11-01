@@ -55,7 +55,7 @@ public class MainEventController extends HttpServlet {
 
 			if(event != null) { // L'event existe.
 				if (event.getPublication() == 0) { //S'il n'est pas public.
-					request.getSession().setAttribute("toastDanger", "L'evenement "+eventID+" n'est pas public.");
+					request.getSession().setAttribute("toastDanger", "L'evenement est privé.");
 					response.sendRedirect(request.getContextPath() + "/main"); 
 					return;
 				} else 

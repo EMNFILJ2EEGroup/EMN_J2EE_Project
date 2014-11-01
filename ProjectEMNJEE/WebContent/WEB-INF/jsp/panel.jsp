@@ -8,27 +8,26 @@
 <link rel="stylesheet" type="text/css"
 	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
-<title>Page principale</title>
+<link rel="stylesheet" type="text/css" href="${baseURL}/css/blocs.css">
+<title>Tableau de bord</title>
 </head>
 
 
 <body>
 	<%@ include file="../jspf/barreHautPanel.jspf"%>
-	<center><h1>Page de gestion</h1></center> <br/>
-	
-	<h1>Liste de mes évènements</h1>
-	<%@ include file="../jspf/toast.jspf"%>
 	<div class="container">
-		<div class="list-group">
-			<c:if test="${ ! empty requestScope.myEventsList }">
-				<c:forEach var="event" items="${requestScope['myEventsList']}">
-					<a href="${baseURL}/panel/info?event=${event.id}"
-						class="list-group-item"> ${event.name} </a>
-				</c:forEach>
-			</c:if>
-			<c:if test="${ empty requestScope.myEventsList }">
-				<p>Aucun évènements</p>
-			</c:if>
+		<div class="row">
+			<c:set var="listeEvents" value="${requestScope.myEventsList }"></c:set>
+			<c:set var="eventLink" value="${baseURL}/panel/info?event="></c:set>
+			<c:set var="title" value="Mes évènements"></c:set>
+			<%@ include file="../jspf/leftBloc.jspf"%>
+			<div class="col-xs-8" id="mainBloc">
+				<center><h1>Tableau de bord</h1></center>
+				<hr />
+				<%@ include file="../jspf/toast.jspf"%>
+			</div>
+
 		</div>
 	</div>
+
 </body>

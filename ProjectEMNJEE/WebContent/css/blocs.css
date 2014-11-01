@@ -1,11 +1,13 @@
 @CHARSET "ISO-8859-1";
 	
 #leftBloc {
-	
+	margin-top : 50px;
 	height : 100%;
+	margin-right: 0px;
 }
 
 #mainBloc {
-	
+	padding-left: 30px;
+	margin-top : 85px;
 	height : 100%;
 }

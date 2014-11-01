@@ -48,6 +48,7 @@ public class MainControlleur extends HttpServlet {
 		request.setAttribute("eventsList", publishedEventsList);
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		rd.forward(request, response);
+		request.getSession().removeAttribute("toastDanger");
 	}
 
 	/**

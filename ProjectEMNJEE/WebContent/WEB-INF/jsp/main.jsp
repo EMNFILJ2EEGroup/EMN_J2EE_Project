@@ -17,24 +17,11 @@
 	<%@ include file="../jspf/barreHaut.jspf"%>
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-3" id="leftBloc">
-				<center><h2>Evènements publiés</h2></center>
-				<div class="list-group">
-					<c:if test="${ ! empty requestScope.eventsList }">
-						<c:forEach var="event" items="${requestScope['eventsList']}">
-							<a href="${baseURL}/main/info?event=${event.id}"
-								class="list-group-item"> ${event.name} </a>
-						</c:forEach>
-					</c:if>
-					<c:if test="${ empty requestScope.eventsList }">
-						<p>Auccun évènements publiés</p>
-					</c:if>
-				</div>
-			</div>
-
-			<div class="col-xs-9" id="mainBloc">
-
-				
+			<c:set var="listeEvents" value="${requestScope.eventsList }"></c:set>
+			<c:set var="eventLink" value="${baseURL}/main/info?event="></c:set>
+			<c:set var="title" value="Evènements publiés"></c:set>
+			<%@ include file="../jspf/leftBloc.jspf"%>
+			<div class="col-xs-8" id="mainBloc">
 				<%@ include file="../jspf/toast.jspf"%>
 			</div>
 
