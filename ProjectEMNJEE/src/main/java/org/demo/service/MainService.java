@@ -15,9 +15,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.apache.derby.tools.sysinfo;
-import org.hibernate.Hibernate;
-
 import main.java.org.demo.bean.jpa.EventsEntity;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.bean.jpa.ParticipationsEntity;
@@ -123,6 +120,7 @@ public class MainService implements ServicesInterface{
 			Query q = em.createNamedQuery("OrganizersEntity.getUserByLogin");
 			q.setParameter("uname", uname);
 			q.setParameter("pwd", pwd);
+			@SuppressWarnings("unchecked")
 			List<OrganizersEntity> res = q.getResultList();
 			if(res.isEmpty()) return null;
 			else return res.get(0).getId();
@@ -134,6 +132,7 @@ public class MainService implements ServicesInterface{
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNamedQuery("OrganizersEntity.getUserByUsername");
 		q.setParameter("uname", uname);
+		@SuppressWarnings("unchecked")
 		List<OrganizersEntity> res = q.getResultList();
 		if(res.isEmpty()) return false;
 		else return true;
@@ -175,6 +174,7 @@ public class MainService implements ServicesInterface{
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNamedQuery("EventsEntity.getAllByUserId");
 		q.setParameter("uid", usernameId);
+		@SuppressWarnings("unchecked")
 		List<EventsEntity> res = q.getResultList();
 		if(res.isEmpty()) return null;
 		else return res;

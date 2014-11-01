@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
 import main.java.org.demo.service.MainService;
 import main.java.org.demo.service.ServicesInterface;
 
@@ -22,7 +20,7 @@ import main.java.org.demo.service.ServicesInterface;
 @WebServlet("/login")
 public class LoginControlleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = Logger.getLogger(LoginControlleur.class);
+
 	
 	
 	/**

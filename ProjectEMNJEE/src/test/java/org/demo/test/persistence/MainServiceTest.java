@@ -1,33 +1,27 @@
 package test.java.org.demo.test.persistence;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import main.java.org.demo.bean.jpa.EventsEntity;
 import main.java.org.demo.bean.jpa.OrganizersEntity;
 import main.java.org.demo.bean.jpa.ParticipationsEntity;
-import main.java.org.demo.controller.MainEventController;
 import main.java.org.demo.persistence.PersistenceServiceProvider;
 import main.java.org.demo.persistence.services.EventsPersistence;
 import main.java.org.demo.persistence.services.OrganizersPersistence;
 import main.java.org.demo.persistence.services.ParticipationsPersistence;
 import main.java.org.demo.service.MainService;
-import main.java.org.demo.service.ServicesInterface;
-
-import org.junit.After;
-
-import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

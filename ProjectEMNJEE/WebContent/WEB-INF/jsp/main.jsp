@@ -3,10 +3,6 @@
 <html>
 
 <%@ include file="../jspf/commonHeader.jspf"%>
-<script type="text/javascript"
-	src="${baseURL}/lib/js/jquery-2.1.1.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="${baseURL}/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/login.css">
 <link rel="stylesheet" type="text/css" href="${baseURL}/css/blocs.css">
 <title>Page principale</title>
